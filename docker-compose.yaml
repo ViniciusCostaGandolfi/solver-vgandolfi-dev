@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: opt-vgandolfi-dev-postgres
+    container_name: solver-vgandolfi-dev-postgres
     ports:
       - "${DB_PORT:-5432}:5432"
     environment:
@@ -18,7 +18,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:4-management-alpine
-    container_name: opt-vgandolfi-dev-rabbitmq
+    container_name: solver-vgandolfi-dev-rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -35,7 +35,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: opt-vgandolfi-dev-redis
+    container_name: solver-vgandolfi-dev-redis
     ports:
       - "${REDIS_PORT:-6379}:6379"
     healthcheck:
@@ -46,7 +46,7 @@ services:
 
   minio:
     image: minio/minio:latest
-    container_name: opt-vgandolfi-dev-minio
+    container_name: solver-vgandolfi-dev-minio
     command: server /data --console-address ":9001"
     ports:
       - "9000:9000"
@@ -59,9 +59,9 @@ services:
 
   api:
     build:
-      context: ./opt-vgandolfi-dev-orchestrator
+      context: ./solver-vgandolfi-dev-orchestrator
       dockerfile: Dockerfile
-    container_name: opt-vgandolfi-dev-api
+    container_name: solver-vgandolfi-dev-api
     ports:
       - "8080:8080"
     environment:
@@ -98,9 +98,9 @@ services:
 
   worker:
     build:
-      context: ./opt-vgandolfi-dev-worker-solver
+      context: ./solver-vgandolfi-dev-worker
       dockerfile: Dockerfile
-    container_name: opt-vgandolfi-dev-worker
+    container_name: solver-vgandolfi-dev-worker
     ports:
       - "8000:8000"
     environment:
@@ -122,11 +122,11 @@ services:
 
   web:
     build:
-      context: ./opt-vgandolfi-dev-web
+      context: ./solver-vgandolfi-dev-web
       dockerfile: Dockerfile
       args:
         VITE_API_URL: ${VITE_API_URL}
-    container_name: opt-vgandolfi-dev-web
+    container_name: solver-vgandolfi-dev-web
     ports:
       - "5174:5174"
     environment:

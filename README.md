@@ -1,4 +1,4 @@
-# opt-vgandolfi-dev
+# solver-vgandolfi-dev
 
 Ferramenta pública e gratuita para resolver **TSP**, **VRP** e **Distance Matrix** de forma assíncrona (polling ou webhook).
 
@@ -11,8 +11,8 @@ Ferramenta pública e gratuita para resolver **TSP**, **VRP** e **Distance Matri
 | Serviço | Stack | Papel |
 |---|---|---|
 | `orchestrator-service/` | Spring Boot 4 (Java 25, DDD) | API REST, jobs, rate-limit, S3, fila, webhook |
-| `opt-worker-solver/` | FastAPI (Python) | Solvers: TSP (LKH), VRP (ALNS) e Distance Matrix (euclidiana ou OSRM) |
-| `opt-vgandolfi-dev-web/` | React Router + Vite + daisyUI + Leaflet | UI em página única |
+| `solver-vgandolfi-dev-worker/` | FastAPI (Python) | Solvers: TSP (LKH), VRP (ALNS) e Distance Matrix (euclidiana ou OSRM) |
+| `solver-vgandolfi-dev-web/` | React Router + Vite + daisyUI + Leaflet | UI em página única |
 
 Fluxo: `UI/curl → API (orchestrator) → RabbitMQ → worker → S3 → resultado`. Inputs e outputs trafegam sempre como objetos no MinIO (S3); o banco guarda apenas os metadados do job.
 
@@ -26,21 +26,21 @@ docker compose up -d
 
 # 2. API (Spring Boot)
 cd orchestrator-service
-export DB_USER=opt-vgandolfi-dev DB_PASSWORD=opt-vgandolfi-dev DB_NAME=opt-vgandolfi-dev
-export RABBIT_USER=opt-vgandolfi-dev RABBIT_PASSWORD=opt-vgandolfi-dev
+export DB_USER=solver-vgandolfi-dev DB_PASSWORD=solver-vgandolfi-dev DB_NAME=solver-vgandolfi-dev
+export RABBIT_USER=solver-vgandolfi-dev RABBIT_PASSWORD=solver-vgandolfi-dev
 ./mvnw spring-boot:run
 
 # 3. Worker (FastAPI) — em outro terminal
-cd opt-worker-solver
+cd solver-vgandolfi-dev-worker
 source /tmp/opt-worker-venv/bin/activate   # ou seu venv
 python -m uvicorn app.main:app --host 0.0.0.0 --port 8001
 
 # 4. UI (dev) — em outro terminal
-cd opt-vgandolfi-dev-web
+cd solver-vgandolfi-dev-web
 npm install && npm run dev
 ```
 
-> O bucket MinIO (`opt-vgandolfi-dev`) precisa existir. Crie uma vez com o cliente `mc` ou o script Python do worker.
+> O bucket MinIO (`solver-vgandolfi-dev`) precisa existir. Crie uma vez com o cliente `mc` ou o script Python do worker.
 
 ## Usando a API
 
@@ -165,10 +165,10 @@ Ultrapassou → `429 {"error":"Rate limit exceeded","retryAfterSeconds":60}`. Co
 cd orchestrator-service && ./mvnw clean test
 
 # Worker (18 testes)
-cd opt-worker-solver && python -m pytest tests/ -v
+cd solver-vgandolfi-dev-worker && python -m pytest tests/ -v
 
 # UI
-cd opt-vgandolfi-dev-web && npm run typecheck && npm run build
+cd solver-vgandolfi-dev-web && npm run typecheck && npm run build
 ```
 
 ## Variáveis de ambiente
