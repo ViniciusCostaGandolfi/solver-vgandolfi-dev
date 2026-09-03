@@ -90,7 +90,7 @@ export function ResultPanels({
               type="button"
               className="btn btn-outline btn-sm gap-1.5"
               onClick={() =>
-                downloadJson(output, `opt-resultado-${jobId ?? "job"}.json`)
+                downloadJson(output, `solver-resultado-${jobId ?? "job"}.json`)
               }
             >
               <IconDownload width={15} height={15} />

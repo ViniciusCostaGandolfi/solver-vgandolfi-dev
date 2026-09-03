@@ -128,9 +128,9 @@ services:
         VITE_API_URL: ${VITE_API_URL}
     container_name: solver-vgandolfi-dev-web
     ports:
-      - "5174:5174"
+      - "3000:3000"
     environment:
-      PORT: 5174
+      PORT: 3000
     depends_on:
       - api
 

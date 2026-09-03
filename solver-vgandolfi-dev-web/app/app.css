@@ -114,10 +114,10 @@
 }
 
 @utility animate-fade-up {
-  animation: opt-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: solver-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes opt-fade-up {
+@keyframes solver-fade-up {
   from {
     opacity: 0;
     transform: translateY(16px);
@@ -130,20 +130,20 @@
 
 @utility animate-route-dash {
   stroke-dasharray: 7 11;
-  animation: opt-route-dash 1.1s linear infinite;
+  animation: solver-route-dash 1.1s linear infinite;
 }
 
-@keyframes opt-route-dash {
+@keyframes solver-route-dash {
   to {
     stroke-dashoffset: -36;
   }
 }
 
 @utility animate-fade-in {
-  animation: opt-fade-in 0.24s ease-out both;
+  animation: solver-fade-in 0.24s ease-out both;
 }
 
-@keyframes opt-fade-in {
+@keyframes solver-fade-in {
   from {
     opacity: 0;
     transform: scale(0.985);
@@ -155,10 +155,10 @@
 }
 
 @utility animate-pulse-ring {
-  animation: opt-pulse-ring 1.9s ease-out infinite;
+  animation: solver-pulse-ring 1.9s ease-out infinite;
 }
 
-@keyframes opt-pulse-ring {
+@keyframes solver-pulse-ring {
   0% {
     transform: scale(1);
     opacity: 0.75;
@@ -172,7 +172,7 @@
 /* ---------------------------------------------------------------------------
    Fundo atmosférico da página
 --------------------------------------------------------------------------- */
-.opt-page-bg {
+.solver-page-bg {
   background:
     radial-gradient(
       60rem 34rem at 85% -10%,
@@ -190,38 +190,38 @@
 /* ---------------------------------------------------------------------------
    Leaflet: integração visual com os temas
 --------------------------------------------------------------------------- */
-.opt-map .leaflet-container {
+.solver-map .leaflet-container {
   font-family: var(--font-sans);
   background: var(--color-base-200);
 }
 
-.opt-map .leaflet-control-attribution {
+.solver-map .leaflet-control-attribution {
   font-size: 0.65rem;
   background: color-mix(in oklab, var(--color-base-100) 78%, transparent);
   color: var(--color-base-content);
   opacity: 0.7;
 }
 
-.opt-map .leaflet-control-attribution a {
+.solver-map .leaflet-control-attribution a {
   color: var(--color-base-content);
 }
 
-.opt-map .leaflet-bar a {
+.solver-map .leaflet-bar a {
   color: var(--color-base-content);
   background: var(--color-base-100);
   border-color: var(--color-base-300);
 }
 
-.opt-map .leaflet-bar a:hover {
+.solver-map .leaflet-bar a:hover {
   background: var(--color-base-200);
 }
 
-.opt-map .leaflet-marker-icon {
+.solver-map .leaflet-marker-icon {
   transition: transform 0.15s ease;
 }
 
 /* Marcadores customizados (divIcon) — cores via variáveis do tema */
-.opt-marker {
+.solver-marker {
   width: 26px;
   height: 26px;
   border-radius: 9999px;
@@ -238,7 +238,7 @@
   position: relative;
 }
 
-.opt-marker--origin {
+.solver-marker--origin {
   width: 34px;
   height: 34px;
   background: var(--color-accent);
@@ -246,13 +246,13 @@
   border-width: 2.5px;
 }
 
-.opt-marker--origin::before {
+.solver-marker--origin::before {
   content: "";
   position: absolute;
   inset: -5px;
   border-radius: 9999px;
   border: 2px solid color-mix(in oklab, var(--color-accent) 60%, transparent);
-  animation: opt-pulse-ring 1.9s ease-out infinite;
+  animation: solver-pulse-ring 1.9s ease-out infinite;
 }
 
 /* ---------------------------------------------------------------------------

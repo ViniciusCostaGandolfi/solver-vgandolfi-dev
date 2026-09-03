@@ -20,7 +20,7 @@ import type { ProblemType } from "../lib/types";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "opt · Otimização de rotas — TSP, VRP e matriz de distâncias" },
+    { title: "solver · Otimização de rotas — TSP, VRP e matriz de distâncias" },
     {
       name: "description",
       content:
@@ -55,7 +55,7 @@ export default function Home() {
   };
 
   return (
-    <main className="opt-page-bg min-h-dvh">
+    <main className="solver-page-bg min-h-dvh">
       <Navbar theme={theme} onToggleTheme={toggleTheme} />
       <Hero />
       <HowItWorks />

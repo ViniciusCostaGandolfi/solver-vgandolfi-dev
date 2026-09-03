@@ -24,7 +24,7 @@ export function useTheme(): UseTheme {
     setTheme(next);
     document.documentElement.dataset.theme = next === "dark" ? "optdark" : "optlight";
     try {
-      localStorage.setItem("opt:theme", next);
+      localStorage.setItem("solver:theme", next);
     } catch {
       /* storage indisponível */
     }

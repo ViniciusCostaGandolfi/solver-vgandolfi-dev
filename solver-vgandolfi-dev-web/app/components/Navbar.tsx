@@ -65,7 +65,7 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
           <span className="grid h-9 w-9 place-items-center rounded-box bg-primary text-primary-content shadow-sm">
             <IconRoute width={19} height={19} />
           </span>
-          <span className="font-display text-xl font-bold tracking-tight">opt</span>
+          <span className="font-display text-xl font-bold tracking-tight">solver</span>
           <span className="badge badge-primary badge-soft badge-sm">beta</span>
         </a>
       </div>

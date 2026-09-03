@@ -25,7 +25,7 @@ export const links: Route.LinksFunction = () => [
 
 const themeInitScript = `(function () {
   try {
-    var stored = localStorage.getItem("opt:theme");
+    var stored = localStorage.getItem("solver:theme");
     var dark = stored
       ? stored === "dark"
       : window.matchMedia &&

@@ -47,7 +47,7 @@ function routeColor(index: number): string {
 }
 
 const ORIGIN_ICON_HTML = `
-  <div class="opt-marker opt-marker--origin">
+  <div class="solver-marker solver-marker--origin">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
       stroke="currentColor" stroke-width="2" stroke-linecap="round"
       stroke-linejoin="round" width="16" height="16" aria-hidden="true">
@@ -180,12 +180,12 @@ export function MapCanvas({
       } else {
         const html = isOrigin
           ? ORIGIN_ICON_HTML
-          : `<div class="opt-marker">${stopIndex + 1}</div>`;
+          : `<div class="solver-marker">${stopIndex + 1}</div>`;
         const size = isOrigin ? [34, 34] : [26, 26];
         const anchor = isOrigin ? [17, 17] : [13, 13];
 
         const icon = L.divIcon({
-          className: "opt-marker-wrap",
+          className: "solver-marker-wrap",
           html,
           iconSize: size as [number, number],
           iconAnchor: anchor as [number, number],
@@ -299,7 +299,7 @@ export function MapCanvas({
   return (
     <div
       ref={containerRef}
-      className={`opt-map relative overflow-hidden rounded-box ${className} ${
+      className={`solver-map relative overflow-hidden rounded-box ${className} ${
         onMapClick ? "cursor-crosshair" : ""
       }`}
       style={{ minHeight }}

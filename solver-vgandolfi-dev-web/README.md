@@ -1,4 +1,4 @@
-# opt · Frontend Web
+# solver · Frontend Web
 
 Interface web de otimização de rotas — TSP (caixeiro viajante), VRP (frota de veículos) e matriz de distâncias. Frontend em React Router Framework Mode + Vite + Tailwind CSS 4 + daisyUI 5 + Leaflet, consumindo a API do [solver-vgandolfi-dev-orchestrator](../solver-vgandolfi-dev-orchestrator).
 

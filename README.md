@@ -32,7 +32,7 @@ export RABBIT_USER=solver-vgandolfi-dev RABBIT_PASSWORD=solver-vgandolfi-dev
 
 # 3. Worker (FastAPI) — em outro terminal
 cd solver-vgandolfi-dev-worker
-source /tmp/opt-worker-venv/bin/activate   # ou seu venv
+source /tmp/solver-worker-venv/bin/activate   # ou seu venv
 python -m uvicorn app.main:app --host 0.0.0.0 --port 8001
 
 # 4. UI (dev) — em outro terminal
