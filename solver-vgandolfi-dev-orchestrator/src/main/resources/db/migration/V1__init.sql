@@ -1,4 +1,4 @@
--- V1: schema inicial do orchestrator-service
+-- V1: schema inicial do solver-vgandolfi-dev-orchestrator
 -- Tabela de jobs de otimização (TSP/VRP/DISTANCE_MATRIX)
 CREATE TABLE optimization_jobs (
     id                UUID PRIMARY KEY,

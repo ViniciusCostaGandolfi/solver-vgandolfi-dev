@@ -10,7 +10,7 @@ Ferramenta pública e gratuita para resolver **TSP**, **VRP** e **Distance Matri
 
 | Serviço | Stack | Papel |
 |---|---|---|
-| `orchestrator-service/` | Spring Boot 4 (Java 25, DDD) | API REST, jobs, rate-limit, S3, fila, webhook |
+| `solver-vgandolfi-dev-orchestrator/` | Spring Boot 4 (Java 25, DDD) | API REST, jobs, rate-limit, S3, fila, webhook |
 | `solver-vgandolfi-dev-worker/` | FastAPI (Python) | Solvers: TSP (LKH), VRP (ALNS) e Distance Matrix (euclidiana ou OSRM) |
 | `solver-vgandolfi-dev-web/` | React Router + Vite + daisyUI + Leaflet | UI em página única |
 
@@ -25,7 +25,7 @@ Pré-requisitos: Docker, Java 25 + Maven (wrapper incluso), Python 3.12+.
 docker compose up -d
 
 # 2. API (Spring Boot)
-cd orchestrator-service
+cd solver-vgandolfi-dev-orchestrator
 export DB_USER=solver-vgandolfi-dev DB_PASSWORD=solver-vgandolfi-dev DB_NAME=solver-vgandolfi-dev
 export RABBIT_USER=solver-vgandolfi-dev RABBIT_PASSWORD=solver-vgandolfi-dev
 ./mvnw spring-boot:run
@@ -162,7 +162,7 @@ Ultrapassou → `429 {"error":"Rate limit exceeded","retryAfterSeconds":60}`. Co
 
 ```bash
 # Backend (68+ testes, JaCoCo ≥ 70%)
-cd orchestrator-service && ./mvnw clean test
+cd solver-vgandolfi-dev-orchestrator && ./mvnw clean test
 
 # Worker (18 testes)
 cd solver-vgandolfi-dev-worker && python -m pytest tests/ -v
@@ -173,4 +173,4 @@ cd solver-vgandolfi-dev-web && npm run typecheck && npm run build
 
 ## Variáveis de ambiente
 
-Ver `.env` na raiz e `orchestrator-service/src/main/resources/application.yml`. As principais: `DB_*`, `RABBIT_*`, `S3_ENDPOINT`, `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_BUCKET_NAME`, `APP_BACKEND_URL`, `NOMINATIM_URL`, `RATE_LIMIT_*`.
+Ver `.env` na raiz e `solver-vgandolfi-dev-orchestrator/src/main/resources/application.yml`. As principais: `DB_*`, `RABBIT_*`, `S3_ENDPOINT`, `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_BUCKET_NAME`, `APP_BACKEND_URL`, `NOMINATIM_URL`, `RATE_LIMIT_*`.

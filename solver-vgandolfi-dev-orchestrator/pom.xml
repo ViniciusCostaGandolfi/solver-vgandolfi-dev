@@ -11,7 +11,7 @@
 	<groupId>dev.vgandolfi.solver</groupId>
 	<artifactId>orchestrator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>orchestrator-service</name>
+	<name>solver-vgandolfi-dev-orchestrator</name>
 	<description>Public async optimization job orchestrator (TSP, VRP, DISTANCE_MATRIX) backed by RabbitMQ worker and S3/MinIO storage.</description>
 	<properties>
 		<java.version>25</java.version>

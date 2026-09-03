@@ -1,6 +1,6 @@
 # opt · Frontend Web
 
-Interface web de otimização de rotas — TSP (caixeiro viajante), VRP (frota de veículos) e matriz de distâncias. Frontend em React Router Framework Mode + Vite + Tailwind CSS 4 + daisyUI 5 + Leaflet, consumindo a API do [orchestrator-service](../orchestrator-service).
+Interface web de otimização de rotas — TSP (caixeiro viajante), VRP (frota de veículos) e matriz de distâncias. Frontend em React Router Framework Mode + Vite + Tailwind CSS 4 + daisyUI 5 + Leaflet, consumindo a API do [solver-vgandolfi-dev-orchestrator](../solver-vgandolfi-dev-orchestrator).
 
 ## O que é
 
@@ -9,7 +9,7 @@ Uma ferramenta gratuita de roteirização que roda direto no navegador: você in
 ## Pré-requisitos
 
 - Node.js ≥ 22 (o template exige ≥ 22.22.0; versões um pouco menores funcionam com aviso)
-- Backend em execução em `http://localhost:8080` (o [`orchestrator-service`](../orchestrator-service), subido via `docker compose` na raiz do projeto)
+- Backend em execução em `http://localhost:8080` (o [`solver-vgandolfi-dev-orchestrator`](../solver-vgandolfi-dev-orchestrator), subido via `docker compose` na raiz do projeto)
 
 ## Rodando em dev
 
