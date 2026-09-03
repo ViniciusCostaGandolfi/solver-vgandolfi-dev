@@ -1,0 +1,459 @@
+{
+  "id": "20b532d8-96a0-48ec-9194-9fc6f4612085",
+  "origin": {
+    "customer_name": "",
+    "street_name": "",
+    "street_number": "",
+    "complement": null,
+    "neighborhood": null,
+    "city": "",
+    "state": "",
+    "postal_code": "",
+    "latitude": -23.561399,
+    "longitude": -46.655794
+  },
+  "routes": [
+    {
+      "vehicle_id": "036a7dea-92ef-4846-a13a-e1d166c66a6a",
+      "vehicle_name": "Van 1",
+      "clients": [
+        {
+          "id": "6a830a51-c786-41a0-b581-ab60c27f6ba9",
+          "external_id": null,
+          "customer_name": "Allianz Parque",
+          "volume_liters": 23.0,
+          "weight_kg": 45.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Allianz Parque",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.5272,
+            "longitude": -46.6785
+          }
+        },
+        {
+          "id": "39f87745-4016-4406-b529-5e5163630256",
+          "external_id": null,
+          "customer_name": "Horto Florestal",
+          "volume_liters": 21.0,
+          "weight_kg": 37.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Horto Florestal",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.4622,
+            "longitude": -46.6321
+          }
+        },
+        {
+          "id": "5965e5c5-a2bb-4dfb-ac7f-6025ae35126e",
+          "external_id": null,
+          "customer_name": "Cantareira",
+          "volume_liters": 10.0,
+          "weight_kg": 58.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Cantareira",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.4615,
+            "longitude": -46.6319
+          }
+        },
+        {
+          "id": "acd11ad8-70a0-4152-8412-7ba64a4113ea",
+          "external_id": null,
+          "customer_name": "Pico do Jaraguá",
+          "volume_liters": 26.0,
+          "weight_kg": 52.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Pico do Jaraguá",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.4623,
+            "longitude": -46.7749
+          }
+        },
+        {
+          "id": "9c22b56d-7a2f-448a-9ad1-8d165f06af8e",
+          "external_id": null,
+          "customer_name": "Parque Villa-Lobos",
+          "volume_liters": 15.0,
+          "weight_kg": 23.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Parque Villa-Lobos",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.5411,
+            "longitude": -46.7332
+          }
+        }
+      ],
+      "route_line": [
+        {
+          "lat": -23.561399,
+          "lng": -46.655794
+        },
+        {
+          "lat": -23.5272,
+          "lng": -46.6785
+        },
+        {
+          "lat": -23.4622,
+          "lng": -46.6321
+        },
+        {
+          "lat": -23.4615,
+          "lng": -46.6319
+        },
+        {
+          "lat": -23.4623,
+          "lng": -46.7749
+        },
+        {
+          "lat": -23.5411,
+          "lng": -46.7332
+        },
+        {
+          "lat": -23.561399,
+          "lng": -46.655794
+        }
+      ],
+      "distance_meters": 37497.04217005385,
+      "volume_liters": 95.0,
+      "weight_kg": 215.0,
+      "route_deliveries": 5
+    },
+    {
+      "vehicle_id": "538f4adb-4461-4260-82f2-2fcddaf42469",
+      "vehicle_name": "Van 2",
+      "clients": [
+        {
+          "id": "7aaa9e75-d6fe-4c91-b4f2-26e6755227ee",
+          "external_id": null,
+          "customer_name": "MASP",
+          "volume_liters": 8.0,
+          "weight_kg": 10.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "MASP",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.5614,
+            "longitude": -46.6559
+          }
+        },
+        {
+          "id": "4c881591-fbd6-4978-95f6-3b47b9909803",
+          "external_id": null,
+          "customer_name": "Museu do Futebol",
+          "volume_liters": 12.0,
+          "weight_kg": 16.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Museu do Futebol",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.5488,
+            "longitude": -46.6665
+          }
+        },
+        {
+          "id": "3f2c5911-a1d7-4193-8f95-204fb1320aab",
+          "external_id": null,
+          "customer_name": "Pinacoteca",
+          "volume_liters": 17.0,
+          "weight_kg": 31.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Pinacoteca",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.5342,
+            "longitude": -46.6338
+          }
+        },
+        {
+          "id": "3742dbf5-d488-46ab-b5e3-53c819d40996",
+          "external_id": null,
+          "customer_name": "Mercado Municipal",
+          "volume_liters": 14.0,
+          "weight_kg": 24.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Mercado Municipal",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.5413,
+            "longitude": -46.6294
+          }
+        },
+        {
+          "id": "266efdab-7977-4b8c-a487-b7926e0dab9f",
+          "external_id": null,
+          "customer_name": "Catedral da Sé",
+          "volume_liters": 9.0,
+          "weight_kg": 59.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Catedral da Sé",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.5506,
+            "longitude": -46.6338
+          }
+        }
+      ],
+      "route_line": [
+        {
+          "lat": -23.561399,
+          "lng": -46.655794
+        },
+        {
+          "lat": -23.5614,
+          "lng": -46.6559
+        },
+        {
+          "lat": -23.5488,
+          "lng": -46.6665
+        },
+        {
+          "lat": -23.5342,
+          "lng": -46.6338
+        },
+        {
+          "lat": -23.5413,
+          "lng": -46.6294
+        },
+        {
+          "lat": -23.5506,
+          "lng": -46.6338
+        },
+        {
+          "lat": -23.561399,
+          "lng": -46.655794
+        }
+      ],
+      "distance_meters": 7523.049015728019,
+      "volume_liters": 60.0,
+      "weight_kg": 140.0,
+      "route_deliveries": 5
+    },
+    {
+      "vehicle_id": "3bf4f1b8-967d-4226-9c54-7302a1bdf091",
+      "vehicle_name": "Van 3",
+      "clients": [
+        {
+          "id": "b26ae361-5586-493f-a6d6-54168578379a",
+          "external_id": null,
+          "customer_name": "Museu do Ipiranga",
+          "volume_liters": 20.0,
+          "weight_kg": 38.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Museu do Ipiranga",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.5852,
+            "longitude": -46.6097
+          }
+        },
+        {
+          "id": "a0cc56f5-beb1-4b09-b4e0-f9c7befef1ba",
+          "external_id": null,
+          "customer_name": "Parque do Carmo",
+          "volume_liters": 27.0,
+          "weight_kg": 51.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Parque do Carmo",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.5729,
+            "longitude": -46.4878
+          }
+        },
+        {
+          "id": "de60c9e2-cc6f-4249-abec-9a5892a8a494",
+          "external_id": null,
+          "customer_name": "Zoológico",
+          "volume_liters": 18.0,
+          "weight_kg": 30.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Zoológico",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.6509,
+            "longitude": -46.619
+          }
+        },
+        {
+          "id": "96bcea2f-b27e-4f7a-850a-6ff54961d3d1",
+          "external_id": null,
+          "customer_name": "Shopping Eldorado",
+          "volume_liters": 24.0,
+          "weight_kg": 44.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Shopping Eldorado",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.5932,
+            "longitude": -46.6806
+          }
+        },
+        {
+          "id": "62faf487-f45d-46f2-926e-39b6b2305f45",
+          "external_id": null,
+          "customer_name": "Parque Ibirapuera",
+          "volume_liters": 11.0,
+          "weight_kg": 17.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Parque Ibirapuera",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "",
+            "state": "",
+            "postal_code": "",
+            "latitude": -23.5874,
+            "longitude": -46.6576
+          }
+        }
+      ],
+      "route_line": [
+        {
+          "lat": -23.561399,
+          "lng": -46.655794
+        },
+        {
+          "lat": -23.5852,
+          "lng": -46.6097
+        },
+        {
+          "lat": -23.5729,
+          "lng": -46.4878
+        },
+        {
+          "lat": -23.6509,
+          "lng": -46.619
+        },
+        {
+          "lat": -23.5932,
+          "lng": -46.6806
+        },
+        {
+          "lat": -23.5874,
+          "lng": -46.6576
+        },
+        {
+          "lat": -23.561399,
+          "lng": -46.655794
+        }
+      ],
+      "distance_meters": 45230.34648067086,
+      "volume_liters": 100.0,
+      "weight_kg": 180.0,
+      "route_deliveries": 5
+    }
+  ],
+  "created_at": "2026-09-01T18:52:03.478219-03:00",
+  "time_to_solve_ms": 120001.02233886719,
+  "_meta": {
+    "id": "2b41dcc2-d94e-4bd8-9fe6-b12520bcdec3",
+    "n_clients": 15,
+    "name": "vrp-4.json"
+  }
+}

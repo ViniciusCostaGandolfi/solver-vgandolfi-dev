@@ -1,0 +1,121 @@
+{
+  "optimized_stops": [
+    {
+      "id": "s2",
+      "items_description": null,
+      "customer_name": "Mercado Municipal",
+      "address": {
+        "customer_name": "Mercado Municipal",
+        "street_name": "",
+        "street_number": "",
+        "complement": null,
+        "neighborhood": null,
+        "city": "",
+        "state": "",
+        "postal_code": "",
+        "latitude": -23.5416,
+        "longitude": -46.6294
+      }
+    },
+    {
+      "id": "s3",
+      "items_description": null,
+      "customer_name": "Estação Santana",
+      "address": {
+        "customer_name": "Estação Santana",
+        "street_name": "",
+        "street_number": "",
+        "complement": null,
+        "neighborhood": null,
+        "city": "",
+        "state": "",
+        "postal_code": "",
+        "latitude": -23.5036,
+        "longitude": -46.624
+      }
+    },
+    {
+      "id": "s4",
+      "items_description": null,
+      "customer_name": "Mooca",
+      "address": {
+        "customer_name": "Mooca",
+        "street_name": "",
+        "street_number": "",
+        "complement": null,
+        "neighborhood": null,
+        "city": "",
+        "state": "",
+        "postal_code": "",
+        "latitude": -23.561,
+        "longitude": -46.5998
+      }
+    },
+    {
+      "id": "s1",
+      "items_description": null,
+      "customer_name": "Parque Ibirapuera",
+      "address": {
+        "customer_name": "Parque Ibirapuera",
+        "street_name": "",
+        "street_number": "",
+        "complement": null,
+        "neighborhood": null,
+        "city": "",
+        "state": "",
+        "postal_code": "",
+        "latitude": -23.5874,
+        "longitude": -46.6576
+      }
+    },
+    {
+      "id": "s5",
+      "items_description": null,
+      "customer_name": "Cidade Universitária",
+      "address": {
+        "customer_name": "Cidade Universitária",
+        "street_name": "",
+        "street_number": "",
+        "complement": null,
+        "neighborhood": null,
+        "city": "",
+        "state": "",
+        "postal_code": "",
+        "latitude": -23.573,
+        "longitude": -46.716
+      }
+    }
+  ],
+  "route_line": [
+    {
+      "lat": -23.561399,
+      "lng": -46.655794
+    },
+    {
+      "lat": -23.5416,
+      "lng": -46.6294
+    },
+    {
+      "lat": -23.5036,
+      "lng": -46.624
+    },
+    {
+      "lat": -23.561,
+      "lng": -46.5998
+    },
+    {
+      "lat": -23.5874,
+      "lng": -46.6576
+    },
+    {
+      "lat": -23.573,
+      "lng": -46.716
+    },
+    {
+      "lat": -23.561399,
+      "lng": -46.655794
+    }
+  ],
+  "distance_meters": 33595.49345428917,
+  "time_to_solve_ms": 0.232696533203125
+}

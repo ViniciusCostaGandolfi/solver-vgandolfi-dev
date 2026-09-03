@@ -1,0 +1,11 @@
+# =============================================================================
+# Profile dev — overlay do application.yml base.
+# NÃO define credenciais/endpoints fixos: tudo que vem de env usa ${VAR:default}
+# (ou nem é redefinido aqui, herdando os defaults locais do base). Assim,
+# `SPRING_PROFILES_ACTIVE=dev ./mvnw spring-boot:run` sem env vars sobe contra o
+# stack local (localhost + opt-vgandolfi-dev) e, dentro do docker-compose, as
+# env vars do serviço api (DB_HOST=postgres, etc.) continuam sobrescrevendo.
+# =============================================================================
+logging:
+  level:
+    dev.vgandolfi.opt: DEBUG

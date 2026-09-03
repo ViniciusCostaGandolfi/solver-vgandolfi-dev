@@ -1,0 +1,140 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: opt-vgandolfi-dev-postgres
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    container_name: opt-vgandolfi-dev-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBIT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBIT_PASSWORD}
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: opt-vgandolfi-dev-redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    container_name: opt-vgandolfi-dev-minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    volumes:
+      - miniodata:/data
+
+  api:
+    build:
+      context: ./opt-vgandolfi-dev-orchestrator
+      dockerfile: Dockerfile
+    container_name: opt-vgandolfi-dev-api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      RABBIT_HOST: rabbitmq
+      RABBIT_PORT: 5672
+      RABBIT_USER: ${RABBIT_USER}
+      RABBIT_PASSWORD: ${RABBIT_PASSWORD}
+      S3_ENDPOINT: http://minio:9000
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      APP_BACKEND_URL: ${APP_BACKEND_URL}
+      RATE_LIMIT_JOBS_PER_MINUTE: ${RATE_LIMIT_JOBS_PER_MINUTE:-10}
+      RATE_LIMIT_POLLS_PER_MINUTE: ${RATE_LIMIT_POLLS_PER_MINUTE:-600}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      NOMINATIM_URL: ${NOMINATIM_URL:-https://nominatim.rotaslivres.com.br}
+      OPENCEP_URL: ${OPENCEP_URL:-https://opencep.rotaslivres.com.br}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      minio:
+        condition: service_started
+      redis:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: ./opt-vgandolfi-dev-worker-solver
+      dockerfile: Dockerfile
+    container_name: opt-vgandolfi-dev-worker
+    ports:
+      - "8000:8000"
+    environment:
+      MQ_HOST: rabbitmq
+      MQ_PORT: 5672
+      MQ_USER: ${RABBIT_USER}
+      MQ_PASSWORD: ${RABBIT_PASSWORD}
+      S3_ENDPOINT: http://minio:9000
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      OSRM_URL: ${OSRM_URL:-https://osrm.rotaslivres.com.br}
+      OSRM_VERIFY_SSL: "false"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      minio:
+        condition: service_started
+
+  web:
+    build:
+      context: ./opt-vgandolfi-dev-web
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    container_name: opt-vgandolfi-dev-web
+    ports:
+      - "5174:5174"
+    environment:
+      PORT: 5174
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
+  rabbitmqdata:
+  miniodata:

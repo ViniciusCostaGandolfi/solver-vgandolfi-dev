@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+
+  flyway:
+    enabled: false
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+  rabbitmq:
+    dynamic: false
+    listener:
+      simple:
+        auto-startup: false
+
+app:
+  base-url: http://localhost:8080
+  rabbitmq:
+    exchange: routing.exchange
+    result-queue: routing.result.queue
+  s3:
+    endpoint: http://localhost:9000
+    access-key: test
+    secret-key: test
+    bucket: test-bucket
+  rate-limit:
+    jobs-per-minute: 3
+    polls-per-minute: 5
+    geo-per-minute: 3
