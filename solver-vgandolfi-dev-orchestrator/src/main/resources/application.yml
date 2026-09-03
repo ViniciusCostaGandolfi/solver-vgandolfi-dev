@@ -59,6 +59,7 @@ app:
     access-key: ${S3_ACCESS_KEY:minioadmin}
     secret-key: ${S3_SECRET_KEY:minioadmin}
     bucket: ${S3_BUCKET_NAME:solver-vgandolfi-dev}
+    region: ${S3_REGION:us-east-1}
   rate-limit:
     jobs-per-minute: ${RATE_LIMIT_JOBS_PER_MINUTE:10}
     polls-per-minute: ${RATE_LIMIT_POLLS_PER_MINUTE:600}

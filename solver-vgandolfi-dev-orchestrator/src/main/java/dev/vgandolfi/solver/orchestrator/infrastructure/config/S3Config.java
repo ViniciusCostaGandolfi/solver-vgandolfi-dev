@@ -25,7 +25,7 @@ public class S3Config {
                 .endpointOverride(URI.create(s3Properties.endpoint()))
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(s3Properties.accessKey(), s3Properties.secretKey())))
-                .region(Region.US_EAST_1)
+                .region(Region.of(s3Properties.region()))
                 .serviceConfiguration(S3Configuration.builder()
                         .pathStyleAccessEnabled(true)
                         .build())

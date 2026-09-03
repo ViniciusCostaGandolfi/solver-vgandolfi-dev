@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     S3_ACCESS_KEY: str = "minioadmin"
     S3_SECRET_KEY: str = "minioadmin"
     S3_BUCKET_NAME: str = "solver-vgandolfi-dev"
-    S3_REGION: str = "us-east-1"
+    S3_REGION: str = "garage"
 
     OSRM_URL: str = "https://osrm.rotaslivres.com.br"
     OSRM_VERIFY_SSL: bool = False
