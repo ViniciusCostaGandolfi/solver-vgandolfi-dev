@@ -46,13 +46,16 @@ function routeColor(index: number): string {
   return ROUTE_COLORS[index % ROUTE_COLORS.length]!;
 }
 
+/* Marcador da origem com o mesmo desenho da logo do site (IconRoute):
+   dois círculos conectados por um caminho. */
 const ORIGIN_ICON_HTML = `
   <div class="solver-marker solver-marker--origin">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
       stroke="currentColor" stroke-width="2" stroke-linecap="round"
-      stroke-linejoin="round" width="16" height="16" aria-hidden="true">
-      <path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10Z"/>
-      <path d="M9 22V12h6v10"/>
+      stroke-linejoin="round" width="18" height="18" aria-hidden="true">
+      <circle cx="6" cy="19" r="3"/>
+      <circle cx="18" cy="5" r="3"/>
+      <path d="M12 19h4.5a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h2"/>
     </svg>
   </div>`;
 
@@ -79,8 +82,11 @@ export function MapCanvas({
   const [ready, setReady] = useState(false);
 
   /* Guarda contra clique-acidental após arrastar um marcador: Leaflet pode
-     disparar "click" no mapa logo depois de um drag. */
+     disparar "click" no mapa logo depois de um drag. Um timer de segurança
+     garante que a guarda nunca fique presa em `true` (ex.: se o dragend do
+     Leaflet não disparar por alguma exceção interna). */
   const dragActiveRef = useRef(false);
+  const dragGuardTimerRef = useRef<number | null>(null);
 
   const onPointChangeRef = useRef(onPointChange);
   const onMapClickRef = useRef(onMapClick);
@@ -120,6 +126,10 @@ export function MapCanvas({
 
     return () => {
       cancelled = true;
+      if (dragGuardTimerRef.current !== null) {
+        window.clearTimeout(dragGuardTimerRef.current);
+        dragGuardTimerRef.current = null;
+      }
       markersRef.current.forEach((m) => m.remove());
       markersRef.current.clear();
       polylinesRef.current.forEach((p) => p.remove());
@@ -149,6 +159,31 @@ export function MapCanvas({
     }).addTo(map);
   }, [dark, ready]);
 
+  /* Mantém o mapa com o tamanho correto quando o container muda de tamanho
+     (layout responsivo, card sticky, etc.). Sem `invalidateSize`, o Leaflet
+     continua desenhando com o tamanho antigo e o mapa pode "sumir" ou ficar
+     com a área em branco. */
+  useEffect(() => {
+    const container = containerRef.current;
+    const map = mapRef.current;
+    if (!container || !map) return;
+
+    let raf = 0;
+    const ro = new ResizeObserver(() => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        mapRef.current?.invalidateSize();
+      });
+    });
+    ro.observe(container);
+
+    return () => {
+      ro.disconnect();
+      if (raf) window.cancelAnimationFrame(raf);
+    };
+  }, [ready]);
+
   /* Sincroniza marcadores com os pontos */
   useEffect(() => {
     const L = leafletRef.current;
@@ -176,53 +211,77 @@ export function MapCanvas({
         ) {
           existing.setLatLng([p.lat, p.lng]);
         }
+        /* Reforça a ordem de desenho mesmo para marcadores já criados. */
+        if (isOrigin) existing.setZIndexOffset(1000);
         existing.setTooltipContent(p.name || (isOrigin ? "Origem" : ""));
       } else {
-        const html = isOrigin
-          ? ORIGIN_ICON_HTML
-          : `<div class="solver-marker">${stopIndex + 1}</div>`;
-        const size = isOrigin ? [34, 34] : [26, 26];
-        const anchor = isOrigin ? [17, 17] : [13, 13];
+        try {
+          const html = isOrigin
+            ? ORIGIN_ICON_HTML
+            : `<div class="solver-marker">${stopIndex + 1}</div>`;
+          const size = isOrigin ? [34, 34] : [26, 26];
+          const anchor = isOrigin ? [17, 17] : [13, 13];
 
-        const icon = L.divIcon({
-          className: "solver-marker-wrap",
-          html,
-          iconSize: size as [number, number],
-          iconAnchor: anchor as [number, number],
-        });
+          const icon = L.divIcon({
+            className: "solver-marker-wrap",
+            html,
+            iconSize: size as [number, number],
+            iconAnchor: anchor as [number, number],
+          });
 
-        const marker = L.marker([p.lat, p.lng], {
-          icon,
-          draggable: Boolean(onPointChangeRef.current),
-          title: p.name || (isOrigin ? "Origem" : "Ponto"),
-          bubblingMouseEvents: false,
-        });
+          const marker = L.marker([p.lat, p.lng], {
+            icon,
+            draggable: Boolean(onPointChangeRef.current),
+            title: p.name || (isOrigin ? "Origem" : "Ponto"),
+            bubblingMouseEvents: false,
+            /* A origem fica SEMPRE por cima das bolinhas de parada, mesmo
+               quando os marcadores se sobrepõem: o Leaflet ordena por
+               `pos.y + zIndexOffset`. */
+            zIndexOffset: isOrigin ? 1000 : 0,
+          });
 
-        if (!isOrigin) {
-          marker.bindTooltip(
-            p.name || `Ponto ${stopIndex + 1}`,
-            { direction: "top", offset: [0, -14] },
-          );
-        } else {
-          marker.bindTooltip("Origem", { direction: "top", offset: [0, -20] });
+          if (!isOrigin) {
+            marker.bindTooltip(
+              p.name || `Ponto ${stopIndex + 1}`,
+              { direction: "top", offset: [0, -14] },
+            );
+          } else {
+            marker.bindTooltip("Origem", { direction: "top", offset: [0, -20] });
+          }
+
+          marker.on("dragstart", () => {
+            dragActiveRef.current = true;
+            if (dragGuardTimerRef.current !== null) {
+              window.clearTimeout(dragGuardTimerRef.current);
+            }
+            dragGuardTimerRef.current = window.setTimeout(() => {
+              dragActiveRef.current = false;
+            }, 1200);
+          });
+
+          marker.on("dragend", (e) => {
+            if (dragGuardTimerRef.current !== null) {
+              window.clearTimeout(dragGuardTimerRef.current);
+              dragGuardTimerRef.current = null;
+            }
+            const latlng = (e.target as LeafletMarker).getLatLng();
+            try {
+              onPointChangeRef.current?.(p.id, latlng.lat, latlng.lng);
+            } finally {
+              /* Mantém a guarda por um instante para ignorar o "click" que o
+                 Leaflet pode emitir no mapa logo após soltar o marcador. */
+              window.setTimeout(() => {
+                dragActiveRef.current = false;
+              }, 250);
+            }
+          });
+
+          marker.addTo(map);
+          markersRef.current.set(p.id, marker);
+        } catch {
+          /* Nunca deixar um marcador inválido quebrar a sincronização do
+             mapa inteiro: pula e segue para os demais pontos. */
         }
-
-        marker.on("dragstart", () => {
-          dragActiveRef.current = true;
-        });
-
-        marker.on("dragend", (e) => {
-          const latlng = (e.target as LeafletMarker).getLatLng();
-          onPointChangeRef.current?.(p.id, latlng.lat, latlng.lng);
-          /* Mantém a guarda por um instante para ignorar o "click" que o
-             Leaflet pode emitir no mapa logo após soltar o marcador. */
-          window.setTimeout(() => {
-            dragActiveRef.current = false;
-          }, 250);
-        });
-
-        marker.addTo(map);
-        markersRef.current.set(p.id, marker);
       }
       if (!isOrigin) stopIndex += 1;
     }
@@ -262,7 +321,10 @@ export function MapCanvas({
     }
   }, [routes, ready]);
 
-  /* Ajusta o enquadramento quando o conjunto de pontos muda ou há resultado */
+  /* Ajusta o enquadramento quando o conjunto de pontos muda ou há resultado.
+     Protegido contra `fitBounds` com coords repetidas/limites degenerados:
+     nesses casos o Leaflet pode derivar zoom NaN/Infinito e deixar o mapa
+     "morto" (sem tiles). Com pontos idênticos, preferimos `setView`. */
   const pointsKey = points.map((p) => p.id).join("|");
   const routesKey = (routes ?? [])
     .map((r) => `${r.id}:${r.coords.length}`)
@@ -271,6 +333,14 @@ export function MapCanvas({
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready) return;
+
+    /* Se o container não tem tamanho (ex.: colapsou durante re-render),
+       invalida o tamanho do Leaflet e evita enquadrar com geometria quebrada. */
+    const size = map.getSize();
+    if (size.x <= 0 || size.y <= 0) {
+      map.invalidateSize();
+      return;
+    }
 
     const valid = points.filter(
       (p) =>
@@ -282,17 +352,33 @@ export function MapCanvas({
         p.lng <= 180,
     );
 
-    const routeCoords = (routes ?? []).flatMap((r) => r.coords);
+    /* Remove coordenadas exatamente duplicadas: fitBounds com pontos
+       idênticos não tem extensão real e pode quebrar o mapa. */
+    const distinct: Array<[number, number]> = [];
+    for (const p of valid) {
+      if (
+        !distinct.some(([lat, lng]) => lat === p.lat && lng === p.lng)
+      ) {
+        distinct.push([p.lat, p.lng]);
+      }
+    }
 
-    if (routeCoords.length >= 2) {
-      map.fitBounds(routeCoords, { padding: [48, 48] });
-    } else if (valid.length >= 2) {
-      map.fitBounds(
-        valid.map((p) => [p.lat, p.lng] as [number, number]),
-        { padding: [48, 48] },
-      );
-    } else if (valid.length === 1) {
-      map.setView([valid[0]!.lat, valid[0]!.lng], 12);
+    const routeCoords = (routes ?? []).flatMap((r) => r.coords);
+    const routeDistinct = Array.from(
+      new Map(routeCoords.map((c) => [`${c[0]}:${c[1]}`, c])).values(),
+    );
+
+    try {
+      if (routeDistinct.length >= 2) {
+        map.fitBounds(routeDistinct, { padding: [48, 48] });
+      } else if (distinct.length >= 2) {
+        map.fitBounds(distinct, { padding: [48, 48] });
+      } else if (valid.length === 1) {
+        map.setView([valid[0]!.lat, valid[0]!.lng], 12);
+      }
+    } catch {
+      /* Nunca deixar um enquadramento inválido derrubar a sincronização:
+         em caso de erro, mantém a visão atual do mapa. */
     }
   }, [pointsKey, routesKey, ready]);
 

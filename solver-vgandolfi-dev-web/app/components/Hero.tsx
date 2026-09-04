@@ -259,7 +259,8 @@ type Slide =
   | { kind: "TSP"; data: HeroTspExample }
   | { kind: "VRP"; data: HeroVrpExample };
 
-/* Alterna TSP/VRP em tamanho crescente, variando cor e densidade a cada slide. */
+/* Alterna TSP/VRP em tamanho crescente, variando cor e densidade a cada slide.
+   Os exemplos usam pontos espalhados da Grande SP (sem sobreposição). */
 const SLIDES: Slide[] = [
   { kind: "TSP", data: tsp1 },
   { kind: "VRP", data: vrp1 },

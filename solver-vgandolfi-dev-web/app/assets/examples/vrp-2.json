@@ -1,5 +1,5 @@
 {
-  "id": "c6c91ec6-b336-456c-a77c-f3a3cf3b8443",
+  "id": "78b3e149-8093-4b6d-a1d7-f2b74df19bf1",
   "origin": {
     "customer_name": "MASP",
     "street_name": "",
@@ -14,166 +14,19 @@
   },
   "routes": [
     {
-      "vehicle_id": "04692cc8-9912-4181-b484-8d0cbdc73b23",
+      "vehicle_id": "c025f28d-e2da-45ce-babb-2262dfea9880",
       "vehicle_name": "Van 1",
       "clients": [
         {
-          "id": "0ef2e214-3305-4517-a5fa-cb534d2a675a",
+          "id": "adba180c-5389-47b6-bfe3-117e568bee4e",
           "external_id": null,
-          "customer_name": "USP",
-          "volume_liters": 16.0,
-          "weight_kg": 22.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "USP",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5614,
-            "longitude": -46.7308
-          }
-        },
-        {
-          "id": "d0f9a089-57a0-4efa-afcd-e5f21ab72a73",
-          "external_id": null,
-          "customer_name": "Parque Villa-Lobos",
-          "volume_liters": 15.0,
-          "weight_kg": 23.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Parque Villa-Lobos",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5411,
-            "longitude": -46.7332
-          }
-        },
-        {
-          "id": "1cfc06fd-8662-44ac-9a37-38fc24c49c44",
-          "external_id": null,
-          "customer_name": "Pico do Jaraguá",
-          "volume_liters": 26.0,
-          "weight_kg": 52.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Pico do Jaraguá",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.4623,
-            "longitude": -46.7749
-          }
-        },
-        {
-          "id": "91852545-abc7-4554-9743-24aa57aa6565",
-          "external_id": null,
-          "customer_name": "Cantareira",
-          "volume_liters": 10.0,
-          "weight_kg": 58.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Cantareira",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.4615,
-            "longitude": -46.6319
-          }
-        },
-        {
-          "id": "3c53520e-f6a0-4f46-bfd2-ebf7a97033c6",
-          "external_id": null,
-          "customer_name": "Horto Florestal",
-          "volume_liters": 21.0,
-          "weight_kg": 37.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Horto Florestal",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.4622,
-            "longitude": -46.6321
-          }
-        },
-        {
-          "id": "217e1f17-76d5-4c14-a307-1bd5b2ebc7ef",
-          "external_id": null,
-          "customer_name": "Santana",
-          "volume_liters": 25.0,
-          "weight_kg": 43.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Santana",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5035,
-            "longitude": -46.627
-          }
-        },
-        {
-          "id": "7c09c0b2-3263-48fa-9c2d-cde2b4f9744c",
-          "external_id": null,
-          "customer_name": "Parque da Água Branca",
-          "volume_liters": 17.0,
-          "weight_kg": 21.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Parque da Água Branca",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5249,
-            "longitude": -46.6785
-          }
-        },
-        {
-          "id": "5eb9a4c9-9cd3-49b2-ac61-c8388b6c1ba0",
-          "external_id": null,
-          "customer_name": "Allianz Parque",
+          "customer_name": "Freguesia do Ó",
           "volume_liters": 23.0,
           "weight_kg": 45.0,
           "created_at": 0,
           "delivered_until": null,
           "address": {
-            "customer_name": "Allianz Parque",
+            "customer_name": "Freguesia do Ó",
             "street_name": "",
             "street_number": "",
             "complement": null,
@@ -181,20 +34,20 @@
             "city": "São Paulo",
             "state": "SP",
             "postal_code": "",
-            "latitude": -23.5272,
-            "longitude": -46.6785
+            "latitude": -23.4875,
+            "longitude": -46.6945
           }
         },
         {
-          "id": "85c0f682-6614-4d80-9c6a-1a5ec5980939",
+          "id": "fa340d99-3a16-4ea9-add5-10d60d938d04",
           "external_id": null,
-          "customer_name": "Museu do Futebol",
-          "volume_liters": 12.0,
-          "weight_kg": 16.0,
+          "customer_name": "Osasco Centro",
+          "volume_liters": 26.0,
+          "weight_kg": 52.0,
           "created_at": 0,
           "delivered_until": null,
           "address": {
-            "customer_name": "Museu do Futebol",
+            "customer_name": "Osasco Centro",
             "street_name": "",
             "street_number": "",
             "complement": null,
@@ -202,392 +55,20 @@
             "city": "São Paulo",
             "state": "SP",
             "postal_code": "",
-            "latitude": -23.5488,
-            "longitude": -46.6665
+            "latitude": -23.5325,
+            "longitude": -46.7915
           }
         },
         {
-          "id": "0b9f3957-2584-45b1-93a6-e59c2244e48d",
+          "id": "3b21f7d5-5a87-4937-9d54-a6bc7495df88",
           "external_id": null,
-          "customer_name": "Pacaembu",
-          "volume_liters": 14.0,
-          "weight_kg": 14.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Pacaembu",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5488,
-            "longitude": -46.6656
-          }
-        }
-      ],
-      "route_line": [
-        {
-          "lat": -23.561399,
-          "lng": -46.655794
-        },
-        {
-          "lat": -23.5614,
-          "lng": -46.7308
-        },
-        {
-          "lat": -23.5411,
-          "lng": -46.7332
-        },
-        {
-          "lat": -23.4623,
-          "lng": -46.7749
-        },
-        {
-          "lat": -23.4615,
-          "lng": -46.6319
-        },
-        {
-          "lat": -23.4622,
-          "lng": -46.6321
-        },
-        {
-          "lat": -23.5035,
-          "lng": -46.627
-        },
-        {
-          "lat": -23.5249,
-          "lng": -46.6785
-        },
-        {
-          "lat": -23.5272,
-          "lng": -46.6785
-        },
-        {
-          "lat": -23.5488,
-          "lng": -46.6665
-        },
-        {
-          "lat": -23.5488,
-          "lng": -46.6656
-        },
-        {
-          "lat": -23.561399,
-          "lng": -46.655794
-        }
-      ],
-      "distance_meters": 47751.5866364491,
-      "volume_liters": 179.0,
-      "weight_kg": 331.0,
-      "route_deliveries": 10
-    },
-    {
-      "vehicle_id": "474f00c0-a6ae-42f6-9a11-6365d584a0dd",
-      "vehicle_name": "Van 2",
-      "clients": [
-        {
-          "id": "6b823548-a136-4089-b9ef-4f2d00305439",
-          "external_id": null,
-          "customer_name": "MASP",
-          "volume_liters": 8.0,
-          "weight_kg": 10.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "MASP",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5614,
-            "longitude": -46.6559
-          }
-        },
-        {
-          "id": "c936fde5-5200-48b0-9bf2-4c7cafccfc71",
-          "external_id": null,
-          "customer_name": "Parque Ibirapuera",
-          "volume_liters": 11.0,
-          "weight_kg": 17.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Parque Ibirapuera",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5874,
-            "longitude": -46.6576
-          }
-        },
-        {
-          "id": "90584b7b-0eb5-4ba4-a44f-c4e8bf05a555",
-          "external_id": null,
-          "customer_name": "Moema",
-          "volume_liters": 19.0,
-          "weight_kg": 29.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Moema",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.6027,
-            "longitude": -46.6604
-          }
-        },
-        {
-          "id": "91f723ef-68e2-43b7-b64f-f3f7e55f73b9",
-          "external_id": null,
-          "customer_name": "Shopping Eldorado",
-          "volume_liters": 24.0,
-          "weight_kg": 44.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Shopping Eldorado",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5932,
-            "longitude": -46.6806
-          }
-        },
-        {
-          "id": "d8cff5b9-8392-4a04-b31f-09cca019828f",
-          "external_id": null,
-          "customer_name": "Autódromo Interlagos",
-          "volume_liters": 13.0,
-          "weight_kg": 15.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Autódromo Interlagos",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.7043,
-            "longitude": -46.6956
-          }
-        },
-        {
-          "id": "801f9900-e1b9-4826-bc6c-8d18d5472083",
-          "external_id": null,
-          "customer_name": "Zoológico",
-          "volume_liters": 18.0,
-          "weight_kg": 30.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Zoológico",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.6509,
-            "longitude": -46.619
-          }
-        },
-        {
-          "id": "fb9a51f2-a47b-47d2-8b91-2ddcaa908d0a",
-          "external_id": null,
-          "customer_name": "Parque do Carmo",
-          "volume_liters": 27.0,
-          "weight_kg": 51.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Parque do Carmo",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5729,
-            "longitude": -46.4878
-          }
-        },
-        {
-          "id": "de33ad24-9799-4797-9de2-d35a9c1c0c7e",
-          "external_id": null,
-          "customer_name": "Tatuapé",
-          "volume_liters": 22.0,
-          "weight_kg": 36.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Tatuapé",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.534,
-            "longitude": -46.576
-          }
-        },
-        {
-          "id": "773a14ae-8fef-47bb-b07f-b43b8291b6ef",
-          "external_id": null,
-          "customer_name": "Museu do Ipiranga",
-          "volume_liters": 20.0,
-          "weight_kg": 38.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Museu do Ipiranga",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5852,
-            "longitude": -46.6097
-          }
-        },
-        {
-          "id": "22b4a933-7760-453c-9962-574c11d6b958",
-          "external_id": null,
-          "customer_name": "Bixiga",
-          "volume_liters": 23.0,
-          "weight_kg": 35.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Bixiga",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5666,
-            "longitude": -46.6466
-          }
-        }
-      ],
-      "route_line": [
-        {
-          "lat": -23.561399,
-          "lng": -46.655794
-        },
-        {
-          "lat": -23.5614,
-          "lng": -46.6559
-        },
-        {
-          "lat": -23.5874,
-          "lng": -46.6576
-        },
-        {
-          "lat": -23.6027,
-          "lng": -46.6604
-        },
-        {
-          "lat": -23.5932,
-          "lng": -46.6806
-        },
-        {
-          "lat": -23.7043,
-          "lng": -46.6956
-        },
-        {
-          "lat": -23.6509,
-          "lng": -46.619
-        },
-        {
-          "lat": -23.5729,
-          "lng": -46.4878
-        },
-        {
-          "lat": -23.534,
-          "lng": -46.576
-        },
-        {
-          "lat": -23.5852,
-          "lng": -46.6097
-        },
-        {
-          "lat": -23.5666,
-          "lng": -46.6466
-        },
-        {
-          "lat": -23.561399,
-          "lng": -46.655794
-        }
-      ],
-      "distance_meters": 66049.28506552374,
-      "volume_liters": 185.0,
-      "weight_kg": 305.0,
-      "route_deliveries": 10
-    },
-    {
-      "vehicle_id": "451dce44-e9fc-461d-9eb1-58e61cf62c11",
-      "vehicle_name": "Van 3",
-      "clients": [
-        {
-          "id": "454d81b6-e799-4281-89d7-c770b1c45cbd",
-          "external_id": null,
-          "customer_name": "Liberdade",
-          "volume_liters": 20.0,
-          "weight_kg": 28.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Liberdade",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5584,
-            "longitude": -46.634
-          }
-        },
-        {
-          "id": "3a52b49a-355f-4517-9a28-8bfe8c8e2b01",
-          "external_id": null,
-          "customer_name": "Catedral da Sé",
+          "customer_name": "Carapicuíba",
           "volume_liters": 9.0,
           "weight_kg": 59.0,
           "created_at": 0,
           "delivered_until": null,
           "address": {
-            "customer_name": "Catedral da Sé",
+            "customer_name": "Carapicuíba",
             "street_name": "",
             "street_number": "",
             "complement": null,
@@ -595,125 +76,20 @@
             "city": "São Paulo",
             "state": "SP",
             "postal_code": "",
-            "latitude": -23.5506,
-            "longitude": -46.6338
+            "latitude": -23.5232,
+            "longitude": -46.835
           }
         },
         {
-          "id": "a8884517-6b8a-4765-818a-3868188ddb8d",
+          "id": "2b5c1a26-f414-4c9c-ac2e-4d7b2ef20c19",
           "external_id": null,
-          "customer_name": "Museu Catavento",
-          "volume_liters": 8.0,
-          "weight_kg": 50.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Museu Catavento",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5453,
-            "longitude": -46.6292
-          }
-        },
-        {
-          "id": "072f1ac0-2503-4752-9646-d416950353ab",
-          "external_id": null,
-          "customer_name": "Mercado Municipal",
-          "volume_liters": 14.0,
-          "weight_kg": 24.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Mercado Municipal",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5413,
-            "longitude": -46.6294
-          }
-        },
-        {
-          "id": "a83bf42d-9b56-4bca-bc3e-d943c73ce921",
-          "external_id": null,
-          "customer_name": "Pinacoteca",
-          "volume_liters": 17.0,
-          "weight_kg": 31.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Pinacoteca",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5342,
-            "longitude": -46.6338
-          }
-        },
-        {
-          "id": "beed0cd3-9d91-4434-96ba-f2826f18090c",
-          "external_id": null,
-          "customer_name": "Luz",
-          "volume_liters": 26.0,
-          "weight_kg": 42.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "Luz",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.534,
-            "longitude": -46.635
-          }
-        },
-        {
-          "id": "c97328f9-7188-471c-be08-1e519c4b4d7a",
-          "external_id": null,
-          "customer_name": "República",
-          "volume_liters": 9.0,
-          "weight_kg": 49.0,
-          "created_at": 0,
-          "delivered_until": null,
-          "address": {
-            "customer_name": "República",
-            "street_name": "",
-            "street_number": "",
-            "complement": null,
-            "neighborhood": null,
-            "city": "São Paulo",
-            "state": "SP",
-            "postal_code": "",
-            "latitude": -23.5432,
-            "longitude": -46.644
-          }
-        },
-        {
-          "id": "cb917af3-4566-4415-80ed-09040be6acdd",
-          "external_id": null,
-          "customer_name": "Anhangabaú",
+          "customer_name": "Alphaville",
           "volume_liters": 12.0,
-          "weight_kg": 56.0,
+          "weight_kg": 16.0,
           "created_at": 0,
           "delivered_until": null,
           "address": {
-            "customer_name": "Anhangabaú",
+            "customer_name": "Alphaville",
             "street_name": "",
             "street_number": "",
             "complement": null,
@@ -721,20 +97,20 @@
             "city": "São Paulo",
             "state": "SP",
             "postal_code": "",
-            "latitude": -23.5453,
-            "longitude": -46.6415
+            "latitude": -23.4971,
+            "longitude": -46.8536
           }
         },
         {
-          "id": "fa450f0b-9837-4af6-9b9d-7ddbe0cdfb2a",
+          "id": "6772a1f8-7536-4127-8a22-7217ffe6d451",
           "external_id": null,
-          "customer_name": "Teatro Municipal",
-          "volume_liters": 11.0,
-          "weight_kg": 57.0,
+          "customer_name": "Santana de Parnaíba",
+          "volume_liters": 24.0,
+          "weight_kg": 44.0,
           "created_at": 0,
           "delivered_until": null,
           "address": {
-            "customer_name": "Teatro Municipal",
+            "customer_name": "Santana de Parnaíba",
             "street_name": "",
             "street_number": "",
             "complement": null,
@@ -742,20 +118,20 @@
             "city": "São Paulo",
             "state": "SP",
             "postal_code": "",
-            "latitude": -23.5453,
-            "longitude": -46.6387
+            "latitude": -23.444,
+            "longitude": -46.9179
           }
         },
         {
-          "id": "bb6a3a0e-fdd3-4e8f-ac89-f7f0c894adb7",
+          "id": "c4235769-419e-44fd-9619-354e7c682fb7",
           "external_id": null,
-          "customer_name": "Centro Cultural SP",
+          "customer_name": "Barueri",
           "volume_liters": 15.0,
-          "weight_kg": 13.0,
+          "weight_kg": 23.0,
           "created_at": 0,
           "delivered_until": null,
           "address": {
-            "customer_name": "Centro Cultural SP",
+            "customer_name": "Barueri",
             "street_name": "",
             "street_number": "",
             "complement": null,
@@ -763,8 +139,92 @@
             "city": "São Paulo",
             "state": "SP",
             "postal_code": "",
-            "latitude": -23.5489,
-            "longitude": -46.6419
+            "latitude": -23.5111,
+            "longitude": -46.8763
+          }
+        },
+        {
+          "id": "a826476d-6353-4188-befc-05845e39f6f8",
+          "external_id": null,
+          "customer_name": "Jandira",
+          "volume_liters": 18.0,
+          "weight_kg": 30.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Jandira",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.5283,
+            "longitude": -46.9024
+          }
+        },
+        {
+          "id": "c9a1257a-62ab-4cee-b0a9-976ecf52dfc0",
+          "external_id": null,
+          "customer_name": "Itapevi",
+          "volume_liters": 21.0,
+          "weight_kg": 37.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Itapevi",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.5488,
+            "longitude": -46.9343
+          }
+        },
+        {
+          "id": "8634adab-e907-4516-9bfc-595fccca82f8",
+          "external_id": null,
+          "customer_name": "Vargem Grande Paulista",
+          "volume_liters": 10.0,
+          "weight_kg": 58.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Vargem Grande Paulista",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.6022,
+            "longitude": -47.0231
+          }
+        },
+        {
+          "id": "ac48d431-0cb1-40db-9d9a-89bd40fac20c",
+          "external_id": null,
+          "customer_name": "Cotia",
+          "volume_liters": 27.0,
+          "weight_kg": 51.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Cotia",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.6038,
+            "longitude": -46.9194
           }
         }
       ],
@@ -774,60 +234,600 @@
           "lng": -46.655794
         },
         {
-          "lat": -23.5584,
-          "lng": -46.634
+          "lat": -23.4875,
+          "lng": -46.6945
         },
         {
-          "lat": -23.5506,
-          "lng": -46.6338
+          "lat": -23.5325,
+          "lng": -46.7915
         },
         {
-          "lat": -23.5453,
-          "lng": -46.6292
+          "lat": -23.5232,
+          "lng": -46.835
         },
         {
-          "lat": -23.5413,
-          "lng": -46.6294
+          "lat": -23.4971,
+          "lng": -46.8536
         },
         {
-          "lat": -23.5342,
-          "lng": -46.6338
+          "lat": -23.444,
+          "lng": -46.9179
         },
         {
-          "lat": -23.534,
-          "lng": -46.635
+          "lat": -23.5111,
+          "lng": -46.8763
         },
         {
-          "lat": -23.5432,
-          "lng": -46.644
+          "lat": -23.5283,
+          "lng": -46.9024
         },
         {
-          "lat": -23.5453,
-          "lng": -46.6415
+          "lat": -23.5488,
+          "lng": -46.9343
         },
         {
-          "lat": -23.5453,
-          "lng": -46.6387
+          "lat": -23.6022,
+          "lng": -47.0231
         },
         {
-          "lat": -23.5489,
-          "lng": -46.6419
+          "lat": -23.6038,
+          "lng": -46.9194
         },
         {
           "lat": -23.561399,
           "lng": -46.655794
         }
       ],
-      "distance_meters": 7866.149981621056,
-      "volume_liters": 141.0,
-      "weight_kg": 409.0,
+      "distance_meters": 74268.6908156195,
+      "volume_liters": 185.0,
+      "weight_kg": 415.0,
+      "route_deliveries": 10
+    },
+    {
+      "vehicle_id": "7b57fd3f-aff1-4abc-9690-e5671ead502e",
+      "vehicle_name": "Van 2",
+      "clients": [
+        {
+          "id": "a9137db2-80b9-41cc-84a7-40f3623b995a",
+          "external_id": null,
+          "customer_name": "Cidade Tiradentes",
+          "volume_liters": 20.0,
+          "weight_kg": 28.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Cidade Tiradentes",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.597,
+            "longitude": -46.388
+          }
+        },
+        {
+          "id": "d4368712-5280-40d2-acd4-2b4bcf3cda52",
+          "external_id": null,
+          "customer_name": "Ferraz de Vasconcelos",
+          "volume_liters": 26.0,
+          "weight_kg": 42.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Ferraz de Vasconcelos",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.54,
+            "longitude": -46.37
+          }
+        },
+        {
+          "id": "0a06b20f-72e9-437f-a2ff-2f02e7d25e28",
+          "external_id": null,
+          "customer_name": "Poá",
+          "volume_liters": 23.0,
+          "weight_kg": 35.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Poá",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.528,
+            "longitude": -46.345
+          }
+        },
+        {
+          "id": "e92ed506-f23e-4da1-b2b9-51ae70041ac9",
+          "external_id": null,
+          "customer_name": "Suzano",
+          "volume_liters": 9.0,
+          "weight_kg": 49.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Suzano",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.5427,
+            "longitude": -46.3109
+          }
+        },
+        {
+          "id": "76f79c8d-bf69-4e2f-bbf3-a0efc7233936",
+          "external_id": null,
+          "customer_name": "Mogi das Cruzes",
+          "volume_liters": 12.0,
+          "weight_kg": 56.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Mogi das Cruzes",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.5226,
+            "longitude": -46.1885
+          }
+        },
+        {
+          "id": "a3a81df4-25ce-4ca8-b641-4a173776cb0a",
+          "external_id": null,
+          "customer_name": "Biritiba Mirim",
+          "volume_liters": 15.0,
+          "weight_kg": 13.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Biritiba Mirim",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.57,
+            "longitude": -46.04
+          }
+        },
+        {
+          "id": "012d0037-2d0a-41e8-927b-55ee046939bb",
+          "external_id": null,
+          "customer_name": "Arujá",
+          "volume_liters": 19.0,
+          "weight_kg": 29.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Arujá",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.3968,
+            "longitude": -46.3221
+          }
+        },
+        {
+          "id": "217a8655-7fd6-4a53-8c10-a510bc61556a",
+          "external_id": null,
+          "customer_name": "Itaquaquecetuba",
+          "volume_liters": 22.0,
+          "weight_kg": 36.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Itaquaquecetuba",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.49,
+            "longitude": -46.345
+          }
+        },
+        {
+          "id": "27950100-a98f-4ad7-9c53-eadf43da817f",
+          "external_id": null,
+          "customer_name": "Itaim Paulista",
+          "volume_liters": 8.0,
+          "weight_kg": 50.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Itaim Paulista",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.492,
+            "longitude": -46.401
+          }
+        },
+        {
+          "id": "af0c7058-ae6f-4395-9493-97377fada538",
+          "external_id": null,
+          "customer_name": "Guaianases",
+          "volume_liters": 17.0,
+          "weight_kg": 21.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Guaianases",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.5408,
+            "longitude": -46.411
+          }
+        }
+      ],
+      "route_line": [
+        {
+          "lat": -23.561399,
+          "lng": -46.655794
+        },
+        {
+          "lat": -23.597,
+          "lng": -46.388
+        },
+        {
+          "lat": -23.54,
+          "lng": -46.37
+        },
+        {
+          "lat": -23.528,
+          "lng": -46.345
+        },
+        {
+          "lat": -23.5427,
+          "lng": -46.3109
+        },
+        {
+          "lat": -23.5226,
+          "lng": -46.1885
+        },
+        {
+          "lat": -23.57,
+          "lng": -46.04
+        },
+        {
+          "lat": -23.3968,
+          "lng": -46.3221
+        },
+        {
+          "lat": -23.49,
+          "lng": -46.345
+        },
+        {
+          "lat": -23.492,
+          "lng": -46.401
+        },
+        {
+          "lat": -23.5408,
+          "lng": -46.411
+        },
+        {
+          "lat": -23.561399,
+          "lng": -46.655794
+        }
+      ],
+      "distance_meters": 126080.2809894591,
+      "volume_liters": 171.0,
+      "weight_kg": 359.0,
+      "route_deliveries": 10
+    },
+    {
+      "vehicle_id": "f9207baf-87ad-4ff0-85db-dd43cb238b7a",
+      "vehicle_name": "Van 3",
+      "clients": [
+        {
+          "id": "e94a15ed-9602-42ed-afe0-8e501764e1f6",
+          "external_id": null,
+          "customer_name": "Perus",
+          "volume_liters": 17.0,
+          "weight_kg": 31.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Perus",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.4033,
+            "longitude": -46.7489
+          }
+        },
+        {
+          "id": "65a4c147-f02a-47ca-91eb-fff4020fc533",
+          "external_id": null,
+          "customer_name": "Caieiras",
+          "volume_liters": 8.0,
+          "weight_kg": 10.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Caieiras",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.3645,
+            "longitude": -46.7432
+          }
+        },
+        {
+          "id": "705a95c7-b599-4b65-b26d-dde51e89f2e0",
+          "external_id": null,
+          "customer_name": "Franco da Rocha",
+          "volume_liters": 11.0,
+          "weight_kg": 17.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Franco da Rocha",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.319,
+            "longitude": -46.727
+          }
+        },
+        {
+          "id": "5e4c1a90-25d9-4f31-9cbc-44a6e59978ed",
+          "external_id": null,
+          "customer_name": "Mairiporã",
+          "volume_liters": 14.0,
+          "weight_kg": 24.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Mairiporã",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.3193,
+            "longitude": -46.5869
+          }
+        },
+        {
+          "id": "580819b0-4f74-450c-8923-a7011aa8afb8",
+          "external_id": null,
+          "customer_name": "Tremembé",
+          "volume_liters": 20.0,
+          "weight_kg": 38.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Tremembé",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.404,
+            "longitude": -46.6065
+          }
+        },
+        {
+          "id": "0dc95a2e-caa5-4106-86f9-0e9fd07b2edb",
+          "external_id": null,
+          "customer_name": "Guarulhos Centro",
+          "volume_liters": 13.0,
+          "weight_kg": 15.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Guarulhos Centro",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.4628,
+            "longitude": -46.5334
+          }
+        },
+        {
+          "id": "26753c4a-5943-4877-a1c8-c36776a31105",
+          "external_id": null,
+          "customer_name": "Aeroporto GRU",
+          "volume_liters": 16.0,
+          "weight_kg": 22.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Aeroporto GRU",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.4356,
+            "longitude": -46.4731
+          }
+        },
+        {
+          "id": "f77f9633-5a13-4bf2-aaa0-836477f25523",
+          "external_id": null,
+          "customer_name": "São Miguel Paulista",
+          "volume_liters": 25.0,
+          "weight_kg": 43.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "São Miguel Paulista",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.4935,
+            "longitude": -46.446
+          }
+        },
+        {
+          "id": "697155d8-e76b-4926-9480-1417f2493345",
+          "external_id": null,
+          "customer_name": "Itaquera",
+          "volume_liters": 14.0,
+          "weight_kg": 14.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Itaquera",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.541,
+            "longitude": -46.458
+          }
+        },
+        {
+          "id": "15ac23f4-9646-4718-ad1e-3d04889e53e5",
+          "external_id": null,
+          "customer_name": "Penha",
+          "volume_liters": 11.0,
+          "weight_kg": 57.0,
+          "created_at": 0,
+          "delivered_until": null,
+          "address": {
+            "customer_name": "Penha",
+            "street_name": "",
+            "street_number": "",
+            "complement": null,
+            "neighborhood": null,
+            "city": "São Paulo",
+            "state": "SP",
+            "postal_code": "",
+            "latitude": -23.5245,
+            "longitude": -46.5413
+          }
+        }
+      ],
+      "route_line": [
+        {
+          "lat": -23.561399,
+          "lng": -46.655794
+        },
+        {
+          "lat": -23.4033,
+          "lng": -46.7489
+        },
+        {
+          "lat": -23.3645,
+          "lng": -46.7432
+        },
+        {
+          "lat": -23.319,
+          "lng": -46.727
+        },
+        {
+          "lat": -23.3193,
+          "lng": -46.5869
+        },
+        {
+          "lat": -23.404,
+          "lng": -46.6065
+        },
+        {
+          "lat": -23.4628,
+          "lng": -46.5334
+        },
+        {
+          "lat": -23.4356,
+          "lng": -46.4731
+        },
+        {
+          "lat": -23.4935,
+          "lng": -46.446
+        },
+        {
+          "lat": -23.541,
+          "lng": -46.458
+        },
+        {
+          "lat": -23.5245,
+          "lng": -46.5413
+        },
+        {
+          "lat": -23.561399,
+          "lng": -46.655794
+        }
+      ],
+      "distance_meters": 91480.0651642725,
+      "volume_liters": 149.0,
+      "weight_kg": 271.0,
       "route_deliveries": 10
     }
   ],
-  "created_at": "2026-09-01T22:47:39.359301-03:00",
-  "time_to_solve_ms": 30001.094102859497,
+  "created_at": "2026-09-03T21:04:23.803324-03:00",
+  "time_to_solve_ms": 30001.631498336792,
   "_meta": {
-    "id": "c6c91ec6-b336-456c-a77c-f3a3cf3b8443",
+    "id": "78b3e149-8093-4b6d-a1d7-f2b74df19bf1",
     "n_clients": 30,
     "n_routes": 3,
     "name": "vrp-2.json"

@@ -8,10 +8,14 @@ soluções válidas e salva os JSONs na mesma estrutura que o frontend espera
 time_to_solve_ms; VRP -> id/origin/routes[].route_line/clients/.../time_to_solve_ms.
 
 Como rodar (na raiz do solver-vgandolfi-dev-worker, com o venv do worker ativo):
-    python scripts/generate_examples.py            # gera tudo
+    python scripts/generate_examples.py            # gera tudo (sobrescreve tsp-1/2/3 e vrp-1/2/3)
     python scripts/generate_examples.py --tsp      # só TSP
     python scripts/generate_examples.py --vrp      # só VRP
     python scripts/generate_examples.py --out /tmp/exemplos   # outro destino
+
+Os exemplos usam SP_OUTER_LANDMARKS (50 pontos únicos espalhados pela Grande
+SP, média ~25 km do centro) — sem pontos sobrepostos e com rotas bem
+dispersas. O script SOBRESCREVE os arquivos tsp-1/2/3.json e vrp-1/2/3.json.
 
 Ajuste as constantes abaixo (TSP_SIZES, VRP_CONFIGS, OUTPUT_DIR, SOLVE_*).
 """
@@ -63,38 +67,69 @@ TSP_USE_STREET = False
 
 # ---------------------------------------------------------------------------
 
-# Pontos turísticos reais de São Paulo (nome, lat, lng).
-SP_LANDMARKS: list[tuple[str, float, float]] = [
-    ("MASP", -23.5614, -46.6559),
-    ("Parque Ibirapuera", -23.5874, -46.6576),
-    ("Mercado Municipal", -23.5413, -46.6294),
-    ("Pinacoteca", -23.5342, -46.6338),
-    ("Museu do Ipiranga", -23.5852, -46.6097),
-    ("Allianz Parque", -23.5272, -46.6785),
-    ("Pico do Jaraguá", -23.4623, -46.7749),
-    ("Catedral da Sé", -23.5506, -46.6338),
-    ("Museu do Futebol", -23.5488, -46.6665),
-    ("Parque Villa-Lobos", -23.5411, -46.7332),
-    ("Zoológico", -23.6509, -46.6190),
-    ("Horto Florestal", -23.4622, -46.6321),
-    ("Shopping Eldorado", -23.5932, -46.6806),
-    ("Parque do Carmo", -23.5729, -46.4878),
-    ("Cantareira", -23.4615, -46.6319),
-    ("Autódromo Interlagos", -23.7043, -46.6956),
-    ("USP", -23.5614, -46.7308),
-    ("Moema", -23.6027, -46.6604),
-    ("Tatuapé", -23.5340, -46.5760),
-    ("Santana", -23.5035, -46.6270),
-    ("Museu Catavento", -23.5453, -46.6292),
-    ("Teatro Municipal", -23.5453, -46.6387),
-    ("Pacaembu", -23.5488, -46.6656),
-    ("Parque da Água Branca", -23.5249, -46.6785),
-    ("Liberdade", -23.5584, -46.6340),
-    ("Bixiga", -23.5666, -46.6466),
-    ("Luz", -23.5340, -46.6350),
-    ("República", -23.5432, -46.6440),
-    ("Anhangabaú", -23.5453, -46.6415),
-    ("Centro Cultural SP", -23.5489, -46.6419),
+# Pontos espalhados da Grande SP (nome, lat, lng) — BEM mais afastados do
+# centro (média ~25 km da origem/MASP vs ~5,8 km dos landmarks antigos) e com
+# 50 pontos únicos (nenhum par praticamente sobreposto; mínimo ~2 km entre si).
+# Usados em TODOS os exemplos TSP (10/20/30) e VRP (20/30/50 clientes), para
+# as rotas demonstrarem dispersão real pela região metropolitana.
+SP_OUTER_LANDMARKS: list[tuple[str, float, float]] = [
+    # Norte
+    ("Caieiras", -23.3645, -46.7432),
+    ("Franco da Rocha", -23.319, -46.727),
+    ("Mairiporã", -23.3193, -46.5869),
+    ("Perus", -23.4033, -46.7489),
+    ("Tremembé", -23.404, -46.6065),
+    ("Freguesia do Ó", -23.4875, -46.6945),
+    # Oeste
+    ("Osasco Centro", -23.5325, -46.7915),
+    ("Carapicuíba", -23.5232, -46.835),
+    ("Alphaville", -23.4971, -46.8536),
+    ("Barueri", -23.5111, -46.8763),
+    ("Jandira", -23.5283, -46.9024),
+    ("Itapevi", -23.5488, -46.9343),
+    ("Santana de Parnaíba", -23.444, -46.9179),
+    ("Cotia", -23.6038, -46.9194),
+    ("Vargem Grande Paulista", -23.6022, -47.0231),
+    # Leste
+    ("Guarulhos Centro", -23.4628, -46.5334),
+    ("Aeroporto GRU", -23.4356, -46.4731),
+    ("Arujá", -23.3968, -46.3221),
+    ("Itaquaquecetuba", -23.49, -46.345),
+    ("São Miguel Paulista", -23.4935, -46.446),
+    ("Itaim Paulista", -23.492, -46.401),
+    ("Penha", -23.5245, -46.5413),
+    ("Itaquera", -23.541, -46.458),
+    ("Guaianases", -23.5408, -46.411),
+    ("Cidade Tiradentes", -23.597, -46.388),
+    ("Poá", -23.528, -46.345),
+    ("Ferraz de Vasconcelos", -23.54, -46.37),
+    ("Suzano", -23.5427, -46.3109),
+    ("Mogi das Cruzes", -23.5226, -46.1885),
+    ("Biritiba Mirim", -23.57, -46.04),
+    # Sudeste / ABC
+    ("São Bernardo do Campo", -23.6943, -46.5654),
+    ("Santo André", -23.6639, -46.5383),
+    ("São Caetano do Sul", -23.6228, -46.565),
+    ("Diadema", -23.6864, -46.6227),
+    ("Mauá", -23.6682, -46.4612),
+    ("Ribeirão Pires", -23.713, -46.4135),
+    ("Rio Grande da Serra", -23.7442, -46.3977),
+    # Sul
+    ("Cidade Dutra", -23.705, -46.692),
+    ("Grajaú", -23.76, -46.681),
+    ("Jardim Ângela", -23.7006, -46.7628),
+    ("Capela do Socorro", -23.7911, -46.7137),
+    ("Parelheiros", -23.8333, -46.7),
+    ("Embu-Guaçu", -23.8325, -46.8117),
+    ("Itapecerica da Serra", -23.7172, -46.8492),
+    ("Represa Guarapiranga", -23.7226, -46.73),
+    # Sudoeste
+    ("Taboão da Serra", -23.6019, -46.7526),
+    ("Embu das Artes", -23.6489, -46.8521),
+    ("São Lourenço da Serra", -23.8538, -46.9436),
+    # Noroeste
+    ("Jundiaí", -23.1865, -46.8842),
+    ("Várzea Paulista", -23.2109, -46.8275),
 ]
 
 # Origem dos exemplos: Av. Paulista / MASP.
@@ -109,7 +144,7 @@ def resolve_tsp(n_stops: int) -> dict:
 
     stops = []
     for i in range(n_stops):
-        name, lat, lng = SP_LANDMARKS[i % len(SP_LANDMARKS)]
+        name, lat, lng = SP_OUTER_LANDMARKS[i % len(SP_OUTER_LANDMARKS)]
         stops.append(
             {
                 "id": f"s{i+1}",
@@ -147,16 +182,26 @@ def resolve_tsp(n_stops: int) -> dict:
     return result.model_dump(mode="json")
 
 
-def resolve_vrp(n_clients: int, n_vehicles: int) -> dict:
-    """Resolve um VRP com n_clients/n_vehicles e devolve dict pronto p/ JSON."""
+def resolve_vrp(
+    n_clients: int,
+    n_vehicles: int,
+    landmarks: list[tuple[str, float, float]] | None = None,
+) -> dict:
+    """Resolve um VRP com n_clients/n_vehicles e devolve dict pronto p/ JSON.
+
+    landmarks: lista de (nome, lat, lng) usada para sortear os clientes
+    (default: SP_OUTER_LANDMARKS — pontos espalhados da Grande SP).
+    """
     from app.algorithms.vrp.vrp_solver import VrpSolver
     from app.config import Settings
     from app.dtos import Address, MatrixType, VehicleType, VrpIn
 
+    landmarks = landmarks if landmarks is not None else SP_OUTER_LANDMARKS
+
     # Clientes espalhados nos landmarks
     clients = []
     for i in range(n_clients):
-        name, lat, lng = SP_LANDMARKS[i % len(SP_LANDMARKS)]
+        name, lat, lng = landmarks[i % len(landmarks)]
         clients.append(
             {
                 "id": str(uuid.uuid4()),

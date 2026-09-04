@@ -289,7 +289,8 @@ export function apiAbsoluteUrl(path: string): string {
 export function apiHealthUrl(): string {
   if (API_URL) {
     try {
-      return `${new URL(API_URL).origin}/health`;
+      // Mantém o prefixo /api/v1: o CORS do backend cobre /api/**, não a raiz.
+      return `${API_URL.replace(/\/$/, "")}/health`;
     } catch {
       return "/health";
     }

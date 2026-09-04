@@ -220,6 +220,13 @@
   transition: transform 0.15s ease;
 }
 
+/* Durante um arraste o Leaflet move o marcador via `transform` a cada
+   mousemove: a transição faz o marcador "perseguir" o cursor com atraso e
+   pode confundir o estado interno do drag. Desliga a transição no arraste. */
+.leaflet-dragging .solver-map .leaflet-marker-icon {
+  transition: none;
+}
+
 /* Marcadores customizados (divIcon) — cores via variáveis do tema */
 .solver-marker {
   width: 26px;
