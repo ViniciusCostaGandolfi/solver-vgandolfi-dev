@@ -89,5 +89,40 @@ class OSRMService:
             logger.error(f"OSRM Route error: {e}")
             return [], 0.0
 
+    def get_route_between(
+        self, lat1: float, lng1: float, lat2: float, lng2: float
+    ) -> List[dict]:
+        """Compute the road route (polyline) between two points using the OSRM Route service.
+
+        Args:
+            lat1, lng1: Origin coordinate.
+            lat2, lng2: Destination coordinate.
+
+        Returns:
+            List of {"lat": ..., "lng": ...} dicts describing the route polyline
+            from point 1 to point 2. Returns [] on failure/error (never raises).
+        """
+        url = (
+            f"{self.base_url}/route/v1/driving/"
+            f"{lng1},{lat1};{lng2},{lat2}?overview=full&geometries=geojson"
+        )
+
+        try:
+            response = requests.get(url, timeout=30, verify=self.verify_ssl)
+            response.raise_for_status()
+            data = response.json()
+
+            if data.get("code") == "Ok" and "routes" in data:
+                route = data["routes"][0]
+                coordinates = route["geometry"]["coordinates"]
+                return [{"lat": lat, "lng": lng} for lng, lat in coordinates]
+
+            logger.error(f"OSRM Route (between) error: {data.get('code')}")
+            return []
+
+        except Exception as e:
+            logger.error(f"OSRM Route (between) error: {e}")
+            return []
+
 
 osrm_service = OSRMService()

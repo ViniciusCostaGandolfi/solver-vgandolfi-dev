@@ -70,7 +70,10 @@ async def test_street_matrix_uses_osrm(s3_service_mock, street_input):
     with patch(
         "app.services.osrm_service.osrm_service.get_distance_matrix",
         return_value=osrm_matrix,
-    ) as mock_osrm:
+    ) as mock_osrm, patch(
+        "app.services.osrm_service.osrm_service.get_route_between",
+        return_value=[{"lat": -23.55, "lng": -46.64}],
+    ):
         response = await svc._solve(JobType.DISTANCE_MATRIX, street_input)
 
     assert isinstance(response, DistanceMatrixResponse)
@@ -221,6 +224,9 @@ async def test_on_routing_message_street_metadata(s3_service_mock, street_input)
     with patch(
         "app.services.osrm_service.osrm_service.get_distance_matrix",
         return_value=osrm_matrix,
+    ), patch(
+        "app.services.osrm_service.osrm_service.get_route_between",
+        return_value=[{"lat": -23.55, "lng": -46.64}],
     ):
         await svc.on_routing_message(_matrix_request_message(street_input))
 
@@ -231,3 +237,96 @@ async def test_on_routing_message_street_metadata(s3_service_mock, street_input)
     assert published.totalStops == 3
     assert published.totalRoutes == 1
     assert published.outputPath == "solutions/matrix-street.json"
+
+
+@pytest.mark.asyncio
+async def test_euclidian_paths_are_straight_segments(s3_service_mock, euclidian_input):
+    """EUCLIDIAN paths are straight segments: [coord_i, coord_j], diagonal [coord_i]."""
+    fixed_matrix = np.array([[0.0, 10.0, 20.0], [10.0, 0.0, 30.0], [20.0, 30.0, 0.0]])
+    svc = RabbitMQService(s3_service_mock)
+
+    with patch(
+        "app.algorithms.calculate_distances.calculate_distances",
+        return_value=fixed_matrix,
+    ):
+        response = await svc._solve(JobType.DISTANCE_MATRIX, euclidian_input)
+
+    dumped = response.model_dump(mode="json", by_alias=True)
+    paths = dumped["paths"]
+    coords = euclidian_input["coordinates"]
+    n = len(coords)
+    assert len(paths) == n
+    for i in range(n):
+        assert len(paths[i]) == n
+        for j in range(n):
+            if i == j:
+                assert paths[i][j] == [coords[i]]
+            else:
+                assert paths[i][j] == [coords[i], coords[j]]
+
+
+@pytest.mark.asyncio
+async def test_street_paths_use_osrm_route(s3_service_mock, street_input):
+    """STREET paths come from get_route_between; diagonal is the point itself."""
+    osrm_matrix = np.zeros((3, 3), dtype=float)
+    mock_polyline = [
+        {"lat": -23.5505, "lng": -46.6333},
+        {"lat": -23.5600, "lng": -46.6400},
+        {"lat": -23.5614, "lng": -46.6559},
+    ]
+    svc = RabbitMQService(s3_service_mock)
+
+    with patch(
+        "app.services.osrm_service.osrm_service.get_distance_matrix",
+        return_value=osrm_matrix,
+    ) as mock_osrm, patch(
+        "app.services.osrm_service.osrm_service.get_route_between",
+        return_value=mock_polyline,
+    ) as mock_route:
+        response = await svc._solve(JobType.DISTANCE_MATRIX, street_input)
+
+    dumped = response.model_dump(mode="json", by_alias=True)
+    paths = dumped["paths"]
+    coords = street_input["coordinates"]
+    n = len(coords)
+    assert len(paths) == n
+    for i in range(n):
+        assert len(paths[i]) == n
+        for j in range(n):
+            if i == j:
+                assert paths[i][j] == [coords[i]]
+            else:
+                assert paths[i][j] == mock_polyline
+
+    # one OSRM route call per off-diagonal pair
+    assert mock_route.call_count == n * (n - 1)
+    mock_osrm.assert_called_once()
+
+
+@pytest.mark.asyncio
+async def test_street_paths_fallback_to_straight_line(s3_service_mock, street_input):
+    """When get_route_between fails ([]), fall back to a straight segment."""
+    osrm_matrix = np.zeros((3, 3), dtype=float)
+    svc = RabbitMQService(s3_service_mock)
+
+    with patch(
+        "app.services.osrm_service.osrm_service.get_distance_matrix",
+        return_value=osrm_matrix,
+    ), patch(
+        "app.services.osrm_service.osrm_service.get_route_between",
+        return_value=[],
+    ):
+        response = await svc._solve(JobType.DISTANCE_MATRIX, street_input)
+
+    dumped = response.model_dump(mode="json", by_alias=True)
+    paths = dumped["paths"]
+    coords = street_input["coordinates"]
+    n = len(coords)
+    assert len(paths) == n
+    for i in range(n):
+        assert len(paths[i]) == n
+        for j in range(n):
+            if i == j:
+                assert paths[i][j] == [coords[i]]
+            else:
+                assert paths[i][j] == [coords[i], coords[j]]

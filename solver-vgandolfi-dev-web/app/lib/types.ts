@@ -100,6 +100,7 @@ export interface VrpOutput {
 
 export interface MatrixOutput {
   matrix?: number[][];
+  paths?: { lat: number; lng: number }[][][];
   coordinates?: GeoCoord[];
   time_to_solve_ms?: number;
 }

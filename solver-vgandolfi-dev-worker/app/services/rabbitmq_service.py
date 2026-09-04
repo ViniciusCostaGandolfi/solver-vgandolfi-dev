@@ -2,6 +2,7 @@ import asyncio
 import json
 import logging
 import time
+from concurrent.futures import ThreadPoolExecutor
 from typing import Optional
 
 import aio_pika
@@ -220,27 +221,90 @@ class RabbitMQService:
             import numpy as np
 
             matrix_in = MatrixRequest.model_validate(input_dict)
+            coords = matrix_in.coordinates
+            n = len(coords)
             start_time = time.time()
 
             if matrix_in.matrix_type == MatrixType.STREET:
                 matrix = await asyncio.to_thread(
                     osrm_service.get_distance_matrix,
-                    [(c.lat, c.lng) for c in matrix_in.coordinates],
+                    [(c.lat, c.lng) for c in coords],
                 )
                 if matrix is None:
                     raise RuntimeError("OSRM distance matrix request failed")
+
+                paths = await asyncio.to_thread(self._build_street_paths, coords)
             else:
                 points = np.array(
-                    [(c.lat, c.lng) for c in matrix_in.coordinates], dtype=float
+                    [(c.lat, c.lng) for c in coords], dtype=float
                 )
                 matrix = await asyncio.to_thread(calculate_distances, points)
+                paths = self._build_euclidian_paths(coords)
 
             return DistanceMatrixResponse(
                 matrix=matrix.tolist(),
-                coordinates=matrix_in.coordinates,
+                paths=paths,
+                coordinates=coords,
                 time_to_solve_ms=float((time.time() - start_time) * 1000),
             )
         raise ValueError(f"Unsupported job type: {job_type}")
+
+    @staticmethod
+    def _coord_to_dict(c) -> dict:
+        """Serialize a Coordinate to the {"lat": ..., "lng": ...} payload shape."""
+        return {"lat": c.lat, "lng": c.lng}
+
+    @classmethod
+    def _build_euclidian_paths(cls, coords) -> list:
+        """Straight-line segments: paths[i][j] = [coord_i, coord_j] (diagonal = [coord_i])."""
+        n = len(coords)
+        return [
+            [
+                [cls._coord_to_dict(coords[i])]
+                if i == j
+                else [cls._coord_to_dict(coords[i]), cls._coord_to_dict(coords[j])]
+                for j in range(n)
+            ]
+            for i in range(n)
+        ]
+
+    @classmethod
+    def _build_street_paths(cls, coords) -> list:
+        """OSRM road polylines between every pair, fetched in parallel threads.
+
+        Diagonal cells hold only the point itself; on OSRM failure the path
+        falls back to a straight segment so no cell is ever empty.
+        """
+        from app.services.osrm_service import osrm_service
+
+        n = len(coords)
+
+        def _path_for(i: int, j: int) -> list:
+            if i == j:
+                return [cls._coord_to_dict(coords[i])]
+            route = osrm_service.get_route_between(
+                coords[i].lat, coords[i].lng, coords[j].lat, coords[j].lng
+            )
+            if route:
+                return route
+            logger.warning(
+                f"OSRM route failed between points {i}->{j}; using straight line fallback"
+            )
+            return [
+                cls._coord_to_dict(coords[i]),
+                cls._coord_to_dict(coords[j]),
+            ]
+
+        paths: list = [[None] * n for _ in range(n)]
+        with ThreadPoolExecutor(max_workers=settings.MATRIX_PATH_WORKERS) as pool:
+            futures = {
+                (i, j): pool.submit(_path_for, i, j)
+                for i in range(n)
+                for j in range(n)
+            }
+            for (i, j), fut in futures.items():
+                paths[i][j] = fut.result()
+        return paths
 
     async def close(self):
         if self.connection:

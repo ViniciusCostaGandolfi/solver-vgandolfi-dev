@@ -24,6 +24,10 @@ class Settings(BaseSettings):
     MAX_CONCURRENT_VRP: int = 2
     MAX_CONCURRENT_MATRIX: int = 2
 
+    # Threads used to fetch STREET path polylines in parallel
+    # (one OSRM Route request per pair of points).
+    MATRIX_PATH_WORKERS: int = 8
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 

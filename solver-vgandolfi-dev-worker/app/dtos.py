@@ -169,7 +169,13 @@ class MatrixRequest(BaseModel):
 
 
 class DistanceMatrixResponse(BaseModel):
-    """Distance-matrix solver output, distances in meters."""
+    """Distance-matrix solver output, distances in meters.
+
+    `paths` is an N×N matrix of polylines: `paths[i][j]` is the route
+    (list of {"lat": ..., "lng": ...} coordinates) from point i to point j.
+    """
+
     matrix: List[List[float]]
+    paths: List[List[List[Coordinate]]]
     coordinates: List[Coordinate]
     time_to_solve_ms: float
