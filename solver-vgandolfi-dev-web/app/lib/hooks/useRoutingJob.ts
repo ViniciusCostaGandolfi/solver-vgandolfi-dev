@@ -36,7 +36,9 @@ import type {
 } from "../types";
 import type { ToastKind } from "./useToast";
 
-export const POLL_INTERVAL_MS = 10000;
+/** Intervalos progressivos entre polls: 1s, 2s, 3s, 5s e depois 10s fixo. */
+export const POLL_DELAYS_MS = [1000, 2000, 3000, 5000];
+export const POLL_FINAL_INTERVAL_MS = 10000;
 const RATE_LIMIT_PAUSE_MS = 60000;
 /** Backoff entre tentativas de baixar o output de um job DONE (evita hot loop). */
 const OUTPUT_RETRY_MS = 8000;
@@ -190,6 +192,7 @@ export function useRoutingJob({
   useEffect(() => {
     if (!jobId || terminal || pollingPaused) return;
     let stopped = false;
+    let tickCount = 0;
 
     const tick = async () => {
       try {
@@ -216,12 +219,23 @@ export function useRoutingJob({
       }
     };
 
-    const timer = window.setInterval(() => void tick(), POLL_INTERVAL_MS);
-    void tick();
+    const schedule = () => {
+      if (stopped) return;
+      // Escada progressiva: 1s, 2s, 3s, 5s e depois 10s fixo.
+      const delay =
+        tickCount < POLL_DELAYS_MS.length
+          ? POLL_DELAYS_MS[tickCount]
+          : POLL_FINAL_INTERVAL_MS;
+      tickCount += 1;
+      window.setTimeout(() => {
+        void tick().then(schedule);
+      }, delay);
+    };
+
+    void tick().then(schedule);
 
     return () => {
       stopped = true;
-      window.clearInterval(timer);
     };
   }, [jobId, terminal, pollingPaused]);
 

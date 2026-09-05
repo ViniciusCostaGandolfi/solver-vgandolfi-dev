@@ -64,6 +64,7 @@ export function MapPanel({
           onPointChange={onPointDrag}
           onMapClick={addPointMode ? onMapClick : undefined}
           minHeight={440}
+          
         />
 
         {problemType === "VRP" && routes.length > 0 && (

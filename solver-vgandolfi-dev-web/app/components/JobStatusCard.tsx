@@ -1,4 +1,4 @@
-import { POLL_INTERVAL_MS } from "../lib/hooks/useRoutingJob";
+import { POLL_DELAYS_MS, POLL_FINAL_INTERVAL_MS } from "../lib/hooks/useRoutingJob";
 import type { JobResponse, JobStatusResponse } from "../lib/types";
 import {
   copyToClipboard,
@@ -138,7 +138,7 @@ export function JobStatusCard({
           <InfoRow label="Consultas de status" value={`${polls}`} />
           <InfoRow
             label="Intervalo de verificação"
-            value={`a cada ${POLL_INTERVAL_MS / 1000} s`}
+            value={`progressivo (${POLL_DELAYS_MS.map((d) => `${d / 1000}s`).join(", ")}, depois ${POLL_FINAL_INTERVAL_MS / 1000}s)`}
           />
         </div>
 

@@ -227,6 +227,14 @@
   transition: none;
 }
 
+/* O wrapper recebe `cursor-crosshair` quando o modo adicionar está ativo.
+   Propaga ao container do Leaflet sem alterar o className dele (alterar o
+   className do container do Leaflet faz o React apagar as classes que o
+   Leaflet adiciona, quebrando o mapa). */
+.cursor-crosshair .solver-map {
+  cursor: crosshair;
+}
+
 /* Marcadores customizados (divIcon) — cores via variáveis do tema */
 .solver-marker {
   width: 26px;

@@ -79,9 +79,12 @@ services:
       S3_ACCESS_KEY: ${S3_ACCESS_KEY}
       S3_SECRET_KEY: ${S3_SECRET_KEY}
       S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      S3_REGION: ${S3_REGION:-us-east-1}
       APP_BACKEND_URL: ${APP_BACKEND_URL}
       RATE_LIMIT_JOBS_PER_MINUTE: ${RATE_LIMIT_JOBS_PER_MINUTE:-10}
       RATE_LIMIT_POLLS_PER_MINUTE: ${RATE_LIMIT_POLLS_PER_MINUTE:-600}
+      RATE_LIMIT_GEO_PER_MINUTE: ${RATE_LIMIT_GEO_PER_MINUTE:-30}
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
       REDIS_HOST: redis
       REDIS_PORT: 6379
       NOMINATIM_URL: ${NOMINATIM_URL:-https://nominatim.rotaslivres.com.br}
@@ -112,6 +115,7 @@ services:
       S3_ACCESS_KEY: ${S3_ACCESS_KEY}
       S3_SECRET_KEY: ${S3_SECRET_KEY}
       S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      S3_REGION: ${S3_REGION:-us-east-1}
       OSRM_URL: ${OSRM_URL:-https://osrm.rotaslivres.com.br}
       OSRM_VERIFY_SSL: "false"
     depends_on:

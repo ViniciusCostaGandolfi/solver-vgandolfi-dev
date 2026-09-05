@@ -148,8 +148,8 @@ export function MapCanvas({
     if (!L || !map) return;
 
     tileLayerRef.current?.remove();
-    const url = dark
-      ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+const url = dark
+      ? "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
       : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
     tileLayerRef.current = L.tileLayer(url, {
       attribution:
@@ -383,34 +383,34 @@ export function MapCanvas({
   }, [pointsKey, routesKey, ready]);
 
   return (
-    <div
-      ref={containerRef}
-      className={`solver-map relative overflow-hidden rounded-box ${className} ${
-        onMapClick ? "cursor-crosshair" : ""
-      }`}
-      style={{ minHeight }}
-      role="application"
-      aria-label="Mapa com os pontos informados"
-    >
-      {!ready && (
-        <div className="absolute inset-0 z-[500] grid place-items-center bg-base-200">
-          <div className="flex flex-col items-center gap-3">
-            <span className="loading loading-spinner loading-lg text-primary" />
-            <p className="text-xs text-base-content/60">Carregando mapa…</p>
+    <div className={`${className} ${onMapClick ? "cursor-crosshair" : ""}`}>
+      <div
+        ref={containerRef}
+        className="solver-map relative overflow-hidden rounded-box"
+        style={{ minHeight }}
+        role="application"
+        aria-label="Mapa com os pontos informados"
+      >
+        {!ready && (
+          <div className="absolute inset-0 z-[500] grid place-items-center bg-base-200">
+            <div className="flex flex-col items-center gap-3">
+              <span className="loading loading-spinner loading-lg text-primary" />
+              <p className="text-xs text-base-content/60">Carregando mapa…</p>
+            </div>
           </div>
-        </div>
-      )}
-      {ready && onMapClick && (
-        <div className="pointer-events-none absolute bottom-3 left-1/2 z-[500] flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-content shadow-lg">
-          <IconPlus width={13} height={13} />
-          Clique no mapa para adicionar um ponto
-        </div>
-      )}
-      {ready && !onMapClick && (
-        <div className="pointer-events-none absolute right-3 top-3 z-[500] rounded-full border border-base-300 bg-base-100/85 px-2.5 py-1 text-[10px] font-medium text-base-content/60 backdrop-blur-sm">
-          Explore o mapa — ative &quot;Adicionar ponto&quot; para inserir
-        </div>
-      )}
+        )}
+        {ready && onMapClick && (
+          <div className="pointer-events-none absolute bottom-3 left-1/2 z-[500] flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-content shadow-lg">
+            <IconPlus width={13} height={13} />
+            Clique no mapa para adicionar um ponto
+          </div>
+        )}
+        {ready && !onMapClick && (
+          <div className="pointer-events-none absolute right-3 top-3 z-[500] rounded-full border border-base-300 bg-base-100/85 px-2.5 py-1 text-[10px] font-medium text-base-content/60 backdrop-blur-sm">
+            Explore o mapa — ative &quot;Adicionar ponto&quot; para inserir
+          </div>
+        )}
+      </div>
     </div>
   );
 }
