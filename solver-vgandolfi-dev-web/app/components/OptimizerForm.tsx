@@ -89,6 +89,11 @@ function ConfigBar({
           <option value="EUCLIDIAN">Euclidiana (linha reta)</option>
           <option value="STREET">Rodoviária (OSRM)</option>
         </select>
+        {matrixType === "STREET" && (
+          <p className="mt-1 text-[11px] leading-tight text-base-content/50">
+            Rotas pelas vias disponíveis apenas para a região Sudeste do Brasil.
+          </p>
+        )}
       </div>
       <div className="w-full flex-1">
         <label className="mb-1 block text-xs font-medium text-base-content/60">
