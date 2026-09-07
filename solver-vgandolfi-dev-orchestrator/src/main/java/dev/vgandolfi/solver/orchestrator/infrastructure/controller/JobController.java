@@ -12,6 +12,7 @@ import dev.vgandolfi.solver.orchestrator.domain.enums.JobType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +31,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/jobs")
 @RequiredArgsConstructor
 @Validated
+@Slf4j
 public class JobController {
 
     private final JobApplicationService jobApplicationService;
@@ -62,6 +64,7 @@ public class JobController {
 
     private ResponseEntity<JobResponse> createJob(JobType type, String inputJson, String webhookUrl,
                                                   HttpServletRequest httpRequest) {
+        log.info("job_request_received type={} ip={}", type, httpRequest.getRemoteAddr());
         JobResponse response = jobApplicationService.createJob(type, inputJson, webhookUrl,
                 httpRequest.getRemoteAddr(), httpRequest.getHeader(HttpHeaders.USER_AGENT));
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);

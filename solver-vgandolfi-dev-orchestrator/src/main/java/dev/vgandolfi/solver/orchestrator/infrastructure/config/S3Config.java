@@ -17,6 +17,7 @@ import software.amazon.awssdk.services.s3.S3Configuration;
 import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
 import software.amazon.awssdk.services.s3.model.HeadBucketRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
+import software.amazon.awssdk.core.exception.SdkClientException;
 
 @Configuration
 @RequiredArgsConstructor
@@ -74,6 +75,11 @@ public class S3Config {
                 // Não derruba o boot: o upload ainda tentará e falhará com
                 // mensagem clara se o bucket estiver realmente inacessível.
             }
+        } catch (SdkClientException ex) {
+            // Falha de rede/conexão (ex.: S3 fora do ar na inicialização).
+            // Também não derruba o boot — o upload falhará com mensagem clara.
+            log.warn("s3_bucket_head_unreachable bucket={} error={}",
+                    bucket, ex.getMessage());
         }
     }
 }

@@ -206,15 +206,30 @@ class RabbitMQService:
         return self.concurrency_limiter.vrp_semaphore
 
     async def _solve(self, job_type: JobType, input_dict: dict):
+        logger.info(f"Solving started type={job_type.value}")
+        solve_start = time.time()
         if job_type == JobType.TSP:
             from app.dtos import TspRequest
             from app.algorithms.tsp.lkh_solver import TspLkhResolver
             tsp_in = TspRequest.model_validate(input_dict)
-            return await asyncio.to_thread(TspLkhResolver(tsp_in, settings).resolve)
+            response = await asyncio.to_thread(TspLkhResolver(tsp_in, settings).resolve)
+            logger.info(
+                f"Solving completed type=TSP elapsed_ms={int((time.time() - solve_start) * 1000)} "
+                f"distance_meters={getattr(response, 'distance_meters', None)} stops={len(getattr(response, 'optimized_stops', []))}"
+            )
+            return response
         elif job_type == JobType.VRP:
             from app.algorithms.vrp.vrp_solver import VrpSolver
             vrp_in = VrpIn.model_validate(input_dict)
-            return await asyncio.to_thread(VrpSolver(vrp_in, settings).resolve)
+            response = await asyncio.to_thread(VrpSolver(vrp_in, settings).resolve)
+            routes = getattr(response, "routes", [])
+            total_distance = sum(getattr(r, "distance_meters", 0) for r in routes)
+            total_stops = sum(len(getattr(r, "clients", [])) for r in routes)
+            logger.info(
+                f"Solving completed type=VRP elapsed_ms={int((time.time() - solve_start) * 1000)} "
+                f"routes={len(routes)} stops={total_stops} distance_meters={total_distance}"
+            )
+            return response
         elif job_type == JobType.DISTANCE_MATRIX:
             from app.algorithms.calculate_distances import calculate_distances
             from app.services.osrm_service import osrm_service
@@ -241,12 +256,17 @@ class RabbitMQService:
                 matrix = await asyncio.to_thread(calculate_distances, points)
                 paths = self._build_euclidian_paths(coords)
 
-            return DistanceMatrixResponse(
+            response = DistanceMatrixResponse(
                 matrix=matrix.tolist(),
                 paths=paths,
                 coordinates=coords,
                 time_to_solve_ms=float((time.time() - start_time) * 1000),
             )
+            logger.info(
+                f"Solving completed type=DISTANCE_MATRIX elapsed_ms={int((time.time() - solve_start) * 1000)} "
+                f"points={n} matrix_type={matrix_in.matrix_type.value}"
+            )
+            return response
         raise ValueError(f"Unsupported job type: {job_type}")
 
     @staticmethod

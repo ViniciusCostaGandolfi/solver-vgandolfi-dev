@@ -1,6 +1,6 @@
 import json
 import logging
-from typing import Any, Dict
+from typing import Any
 
 import boto3
 from botocore.config import Config
@@ -29,13 +29,13 @@ class S3Service:
         except Exception as e:
             logger.warning(f"S3 connection check failed: {e}")
 
-    def upload_json(self, data: Dict[str, Any], prefix: str = "solutions") -> str:
+    def upload_json(self, data: dict[str, Any], prefix: str = "solutions") -> str:
         import uuid
         key = f"{prefix}/{uuid.uuid4()}.json"
         self.client.put_object(Bucket=self.bucket, Key=key, Body=json.dumps(data, default=str))
         logger.info(f"Uploaded to S3: {key}")
         return key
 
-    def download_json(self, key: str) -> Dict[str, Any]:
+    def download_json(self, key: str) -> dict[str, Any]:
         response = self.client.get_object(Bucket=self.bucket, Key=key)
         return json.loads(response["Body"].read().decode("utf-8"))
