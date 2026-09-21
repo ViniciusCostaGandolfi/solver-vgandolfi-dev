@@ -41,7 +41,7 @@ class LargeVehicleRoutineProblemn:
         kmeans.fit(points_scaled)
         return n_clusters, kmeans.labels_
 
-    def resolve(self) -> VrpOut:
+    def resolve(self, deadline: float | None = None) -> VrpOut:
         if not self.vrp_in.vehicles:
             raise ValueError("At least one vehicle type is required.")
 
@@ -52,6 +52,12 @@ class LargeVehicleRoutineProblemn:
             logger.info(f"LargeVRP: {len(self.points)} clients split into {n_clusters} clusters")
 
             for cluster in range(n_clusters):
+                if deadline is not None and time.monotonic() > deadline:
+                    logger.warning(
+                        f"LargeVRP: time budget exceeded at cluster {cluster}/{n_clusters}; "
+                        f"returning best solution so far"
+                    )
+                    break
                 mask = labels == cluster
                 cluster_clients = [self.vrp_in.clients[i] for i, active in enumerate(mask) if active]
                 if not cluster_clients:
@@ -66,12 +72,12 @@ class LargeVehicleRoutineProblemn:
                     max_route_distance=self.vrp_in.max_route_distance,
                 )
                 sub_solver = VehicleRoutineProblemn(cluster_vrp, settings=self.settings)
-                cluster_routes = sub_solver.resolve()
+                cluster_routes = sub_solver.resolve(deadline=deadline)
                 self.routes.extend(cluster_routes)
         else:
             logger.info(f"LargeVRP: {len(self.points)} clients — solving directly")
             sub_solver = VehicleRoutineProblemn(self.vrp_in, settings=self.settings)
-            self.routes = sub_solver.resolve()
+            self.routes = sub_solver.resolve(deadline=deadline)
 
         return VrpOut(
             id=self.vrp_in.id,

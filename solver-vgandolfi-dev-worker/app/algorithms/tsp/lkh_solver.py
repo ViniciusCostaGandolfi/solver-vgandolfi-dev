@@ -64,13 +64,16 @@ class TspLkhResolver:
 
     def resolve(self) -> TspResponse:
         start_time = time.time()
+        deadline = time.monotonic() + (
+            self.settings.SOLVER_TIME_BUDGET_SECONDS if self.settings is not None else 20
+        )
 
         # 1. Distance matrix
         dist_matrix = self._build_distance_matrix()
 
         # 2. LKH heuristic
         tour, tour_length = lin_kernighan_heuristic(
-            dist_matrix, max_iterations=self.settings.LKH_MAX_ITERATIONS
+            dist_matrix, max_iterations=self.settings.LKH_MAX_ITERATIONS, deadline=deadline
         )
 
         # 3. Build ordered stops, removing return-to-start duplicate

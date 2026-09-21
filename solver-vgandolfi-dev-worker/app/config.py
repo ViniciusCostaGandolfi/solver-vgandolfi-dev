@@ -17,6 +17,13 @@ class Settings(BaseSettings):
     OSRM_VERIFY_SSL: bool = False
 
     VRP_TIMEOUT_SECONDS: int = 600
+    # Orçamento TOTAL (segundos) de processamento por problema. Nenhum solver
+    # pode ultrapassar esse teto — a busca para com a melhor solução até ali.
+    SOLVER_TIME_BUDGET_SECONDS: int = 20
+    # Limite individual da busca do OR-Tools CVRP (nunca ultrapassa o orçamento
+    # total; a solução converge rápido e tempo extra só gasta CPU sem qualidade:
+    # medido 10s ≈ 120s para 50 clientes).
+    ORTOOLS_TIME_LIMIT_SECONDS: int = 10
     LKH_MAX_ITERATIONS: int = 30000
     ALNS_ITERATIONS: int = 1500
 

@@ -52,7 +52,7 @@ def apply_2opt_move(tour: np.ndarray, i: int, j: int) -> np.ndarray:
 
 
 def lin_kernighan_heuristic(
-    dist_matrix: np.ndarray, max_iterations: int = 30000
+    dist_matrix: np.ndarray, max_iterations: int = 30000, deadline: float | None = None
 ) -> Tuple[np.ndarray, float]:
     """
     Lin-Kernighan heuristic (2-opt improvement) for the TSP.
@@ -60,16 +60,24 @@ def lin_kernighan_heuristic(
     Args:
         dist_matrix: NxN distance matrix (float64, diagonal should be inf).
         max_iterations: Maximum improvement iterations.
+        deadline: Monotonic-clock deadline; stops early when exceeded and
+            returns the best tour found so far (numba cannot call time.time()
+            in nopython mode, so the loop lives here in Python).
 
     Returns:
         (tour, tour_length) where tour includes the return-to-origin edge.
     """
+    import time
+
     n = dist_matrix.shape[0]
     tour = np.arange(0, n, dtype=np.int32)
     improved = True
     iteration = 0
 
     while improved and iteration < max_iterations:
+        if deadline is not None and time.monotonic() > deadline:
+            break
+
         improved = False
         best_i, best_j, best_delta = find_best_2opt_move(tour, dist_matrix)
 

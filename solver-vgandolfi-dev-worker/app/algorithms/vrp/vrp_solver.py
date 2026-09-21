@@ -201,13 +201,21 @@ class VehicleRoutineProblemn:
         self.vehicle_by_centroid = capacited_kmeans.vehicle_by_centroid
         return status
 
-    def resolve(self) -> List[RouteDto]:
+    def resolve(self, deadline: Optional[float] = None) -> List[RouteDto]:
         max_attempts = 10
         attempts = 0
         best_alns_routes: Optional[List[RouteDto]] = None
         route_offset = 0
 
         while attempts < max_attempts:
+            # Orçamento global de tempo: para com a melhor solução encontrada.
+            if deadline is not None and time.monotonic() > deadline:
+                logger.warning(
+                    f"VehicleRoutineProblemn: time budget exceeded "
+                    f"(attempt {attempts}); returning best solution so far"
+                )
+                break
+
             status = self._calculate_routes_groups(route_offset)
             if status == 0:
                 attempts += 1
@@ -300,7 +308,7 @@ class VehicleRoutineProblemn:
             alns = ALNSSolver(self.routes, self.vrp_in, dist_matrix_full, self.is_southeast)
             iterations = self.settings.ALNS_ITERATIONS if self.settings is not None else 1500
             improved_routes, unassigned_count, fleet_valid = alns.solve(
-                iterations=iterations, initial_temp=100.0, cooling_rate=0.995  # type: ignore
+                iterations=iterations, initial_temp=100.0, cooling_rate=0.995, deadline=deadline  # type: ignore
             )
 
             if unassigned_count == 0 and fleet_valid:
@@ -348,15 +356,20 @@ class VrpSolver:
                 time_to_solve_ms=0.0,
             )
 
+        # Deadline global de processamento por problema (SOLVER_TIME_BUDGET_SECONDS).
+        budget = self.settings.SOLVER_TIME_BUDGET_SECONDS if self.settings is not None else 20
+        deadline = time.monotonic() + budget
+        logger.info(f"VRP: total time budget {budget}s per problem")
+
         if n_clients <= 50:
             # Small instance: use OR-Tools CVRP directly
-            return self._solve_ortools_cvrp()
+            return self._solve_ortools_cvrp(deadline=deadline)
         else:
             # Large instance: clustering + ALNS
             from app.algorithms.vrp.large_vrp import LargeVehicleRoutineProblemn
 
             solver = LargeVehicleRoutineProblemn(self.vrp_in, settings=self.settings)
-            return solver.resolve()
+            return solver.resolve(deadline=deadline)
 
     def _check_fleet_capacity(self, n_clients: int) -> None:
         """Raise InfeasibleVrpError when total demand exceeds fleet capacity.
@@ -393,7 +406,7 @@ class VrpSolver:
                 f"{total_delivery_capacity} available"
             )
 
-    def _solve_ortools_cvrp(self) -> VrpOut:
+    def _solve_ortools_cvrp(self, deadline: Optional[float] = None) -> VrpOut:
         """Solve small VRP instances directly with OR-Tools CVRP."""
         import numpy as np
 
@@ -488,7 +501,11 @@ class VrpSolver:
                 "Deliveries",
             )
 
-        # Solve
+        # Solve — OR-Tools time limit é o menor entre o limite individual e o
+        # tempo restante do orçamento global de 20s por problema.
+        remaining_budget = 0
+        if deadline is not None:
+            remaining_budget = max(1, int(deadline - time.monotonic()))
         search_parameters = pywrapcp.DefaultRoutingSearchParameters()
         search_parameters.first_solution_strategy = (
             routing_enums_pb2.FirstSolutionStrategy.PARALLEL_CHEAPEST_INSERTION
@@ -496,9 +513,14 @@ class VrpSolver:
         search_parameters.local_search_metaheuristic = (
             routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
         )
-        search_parameters.time_limit.seconds = min(
-            self.settings.VRP_TIMEOUT_SECONDS, 120
-        )
+        if deadline is not None:
+            search_parameters.time_limit.seconds = min(
+                self.settings.ORTOOLS_TIME_LIMIT_SECONDS, remaining_budget
+            )
+        else:
+            search_parameters.time_limit.seconds = min(
+                self.settings.VRP_TIMEOUT_SECONDS, self.settings.ORTOOLS_TIME_LIMIT_SECONDS
+            )
 
         solution = routing.SolveWithParameters(search_parameters)
 

@@ -1,6 +1,7 @@
 import logging
 import math
 import random
+import time
 from typing import Dict, List, Optional, Set, Tuple
 
 import numpy as np
@@ -360,12 +361,20 @@ class ALNSSolver:
     # --- Main ALNS Loop ---
 
     def solve(
-        self, iterations: int = 1000, initial_temp: float = 100.0, cooling_rate: float = 0.995
+        self, iterations: int = 1000, initial_temp: float = 100.0, cooling_rate: float = 0.995,
+        deadline: Optional[float] = None,
     ) -> Tuple[List[RouteDto], int, bool]:
         temp = initial_temp
         num_clients = len(self.vrp_in.clients)
 
         for iteration in range(iterations):
+            # Orçamento global de tempo por problema: para com a melhor solução.
+            if deadline is not None and time.monotonic() > deadline:
+                logger.warning(
+                    f"ALNS: time budget exceeded at iteration {iteration}; "
+                    f"best cost={self.best_state.cost:.2f}, unassigned={len(self.best_state.unassigned)}"
+                )
+                break
             state = self.current_state.clone()
             degree = max(2, int(num_clients * random.uniform(0.1, 0.4)))
 
