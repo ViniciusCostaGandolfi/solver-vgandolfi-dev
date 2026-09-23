@@ -79,6 +79,7 @@ interface UseRoutingJobArgs {
   origin: OriginState;
   points: PointRow[];
   vehicles: VehicleRow[];
+  targetRoutes: string;
   webhookUrl: string;
   showToast: (msg: string, kind: ToastKind) => void;
   statusRef: React.RefObject<HTMLDivElement | null>;
@@ -91,6 +92,7 @@ export function useRoutingJob({
   origin,
   points,
   vehicles,
+  targetRoutes,
   webhookUrl,
   showToast,
   statusRef,
@@ -139,12 +141,20 @@ export function useRoutingJob({
   /* ---------------------- submissão ---------------------- */
   const buildInput = (type: ProblemType): Record<string, unknown> => {
     if (type === "TSP") return buildTspInput(origin, points, matrixType);
-    if (type === "VRP") return buildVrpInput(origin, points, vehicles, matrixType);
+    if (type === "VRP")
+      return buildVrpInput(origin, points, vehicles, matrixType, targetRoutes);
     return buildMatrixInput(points, matrixType);
   };
 
   const handleOptimize = async () => {
-    const err = validateProblem(problemType, origin, points, vehicles, webhookUrl);
+    const err = validateProblem(
+      problemType,
+      origin,
+      points,
+      vehicles,
+      targetRoutes,
+      webhookUrl,
+    );
     if (err) {
       setValidationError(err);
       showToast(err, "error");

@@ -67,12 +67,22 @@ export function buildVrpInput(
   clients: PointRow[],
   vehicles: VehicleRow[],
   matrixType: MatrixType,
+  targetRoutes: string,
 ): Record<string, unknown> {
   const originLat = requireCoord(origin.lat, "origem");
   const originLng = requireCoord(origin.lng, "origem");
+  const parsedTargetRoutes = parseCoord(targetRoutes);
+  const targetRoutesValue =
+    parsedTargetRoutes !== null &&
+    Number.isInteger(parsedTargetRoutes) &&
+    parsedTargetRoutes >= 1
+      ? parsedTargetRoutes
+      : null;
   return {
     matrixType,
     origin: buildLocation(originLat, originLng),
+    // Contrato estável: sempre presente; null quando não informado.
+    targetRoutes: targetRoutesValue,
     clients: clients.map((c, i) => ({
       id: c.id,
       name: c.name || `Cliente ${i + 1}`,
@@ -126,6 +136,7 @@ export function validateProblem(
   origin: OriginState,
   points: PointRow[],
   vehicles: VehicleRow[],
+  targetRoutes = "",
   webhookUrl = "",
 ): string | null {
   if (type !== "DISTANCE_MATRIX") {
@@ -158,6 +169,12 @@ export function validateProblem(
   }
 
   if (type === "VRP") {
+    if (targetRoutes.trim()) {
+      const tr = parseCoord(targetRoutes);
+      if (tr === null || !Number.isInteger(tr) || tr < 1) {
+        return "Rotas alvo precisa ser um número inteiro maior que zero.";
+      }
+    }
     if (vehicles.length === 0) {
       return "Adicione pelo menos 1 veículo.";
     }

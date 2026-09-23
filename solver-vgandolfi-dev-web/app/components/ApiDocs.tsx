@@ -171,7 +171,8 @@ const VRP_BODY = `{
     "vehicles": [
       { "name": "Van", "maxDeliveries": 10, "maxWeightKg": 1000, "maxVolumeLiters": 200 },
       { "name": "Carro", "maxDeliveries": 5, "maxWeightKg": 400, "maxVolumeLiters": 80 }
-    ]
+    ],
+    "targetRoutes": 3
   }
 }`;
 
@@ -189,7 +190,8 @@ const VRP_CURL = `curl -X POST http://localhost:8080/api/v1/jobs/vrp \\
       "vehicles": [
         { "name": "Van", "maxDeliveries": 10, "maxWeightKg": 1000, "maxVolumeLiters": 200 },
         { "name": "Carro", "maxDeliveries": 5, "maxWeightKg": 400, "maxVolumeLiters": 80 }
-      ]
+      ],
+      "targetRoutes": null
     }
   }'`;
 
@@ -278,6 +280,7 @@ const VRP_FIELDS: ApiField[] = [
   { name: "input.origin", desc: "{ lat, lng } do depósito (saída das rotas).", required: true },
   { name: "input.clients[]", desc: "Clientes: id, name, location { lat, lng }, volumeLiters (L) e weightKg (kg). Mínimo 1.", required: true },
   { name: "input.vehicles[]", desc: "Veículos: name, maxDeliveries, maxWeightKg e maxVolumeLiters. Mínimo 1.", required: true },
+  { name: "input.targetRoutes", desc: "Número de rotas alvo (opcional). Se ausente, o solver minimiza o número de rotas; se informado, o desvio em relação ao alvo é penalizado na função objetivo. Mínimo 1.", required: false },
 ];
 
 const MATRIX_FIELDS: ApiField[] = [

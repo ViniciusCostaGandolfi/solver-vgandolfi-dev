@@ -8,6 +8,7 @@ import {
   IconMapPin,
   IconNavigation,
   IconPlus,
+  IconRoute,
   IconTrash,
   IconTruck,
   IconUpload,
@@ -20,6 +21,7 @@ interface OptimizerFormProps {
   origin: OriginState;
   points: PointRow[];
   vehicles: VehicleRow[];
+  targetRoutes: string;
   geoBusy: boolean;
   fileInputRef: RefObject<HTMLInputElement | null>;
   mapPanel: ReactNode;
@@ -32,6 +34,7 @@ interface OptimizerFormProps {
   onUpdateVehicle: (id: string, patch: Partial<VehicleRow>) => void;
   onRemoveVehicle: (id: string) => void;
   onClearPoints: () => void;
+  setTargetRoutes: (v: string) => void;
   onOriginGeocode: (r: {
     formattedAddress: string;
     latitude: number;
@@ -56,7 +59,7 @@ export function OptimizerForm(props: OptimizerFormProps) {
           {props.problemType !== "DISTANCE_MATRIX" && (
             <OriginEditor {...props} />
           )}
-          {props.problemType === "VRP" && <VehiclesEditor {...props} />}
+          {props.problemType === "VRP" && <RoutesOptionsCard {...props} />}
           <PointsTable {...props} />
         </div>
         {mapPanel}
@@ -202,6 +205,41 @@ function OriginEditor({
             {origin.name}
           </p>
         )}
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------- RoutesOptionsCard -------------------------- */
+
+function RoutesOptionsCard(props: OptimizerFormProps) {
+  const { targetRoutes, setTargetRoutes } = props;
+  return (
+    <div className="card card-border">
+      <div className="card-body gap-4">
+        <h3 className="flex items-center gap-2 font-display font-semibold">
+          <span className="grid h-8 w-8 place-items-center rounded-box bg-primary/10 text-primary">
+            <IconRoute width={16} height={16} />
+          </span>
+          Opções de Rotas
+        </h3>
+        <label className="block">
+          <span className="mb-1 block text-xs font-medium text-base-content/60">
+            Rotas alvo (opcional)
+          </span>
+          <input
+            type="text"
+            inputMode="numeric"
+            className="input  input-sm w-full font-mono"
+            value={targetRoutes}
+            placeholder="Ex.: 3"
+            onChange={(e) => setTargetRoutes(e.target.value)}
+          />
+          <span className="mt-1 block text-[11px] leading-tight text-base-content/50">
+            Deixe vazio para o solver minimizar o número de rotas.
+          </span>
+        </label>
+        <VehiclesEditor {...props} />
       </div>
     </div>
   );

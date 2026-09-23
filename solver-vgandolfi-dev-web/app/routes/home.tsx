@@ -43,6 +43,7 @@ export default function Home() {
     origin: optimizer.origin,
     points: optimizer.points,
     vehicles: optimizer.vehicles,
+    targetRoutes: optimizer.targetRoutes,
     webhookUrl: optimizer.webhookUrl,
     showToast,
     statusRef,
@@ -75,6 +76,7 @@ export default function Home() {
           origin={optimizer.origin}
           points={optimizer.points}
           vehicles={optimizer.vehicles}
+          targetRoutes={optimizer.targetRoutes}
           geoBusy={optimizer.geoBusy}
           fileInputRef={optimizer.fileInputRef}
           onMatrixTypeChange={optimizer.setMatrixType}
@@ -87,6 +89,7 @@ export default function Home() {
           onAddVehicle={optimizer.addVehicle}
           onUpdateVehicle={optimizer.updateVehicle}
           onRemoveVehicle={optimizer.removeVehicle}
+          setTargetRoutes={optimizer.setTargetRoutes}
           onClearPoints={optimizer.clearPoints}
           onOriginGeocode={optimizer.handleOriginGeocode}
           onAddByAddress={optimizer.handleAddByAddress}

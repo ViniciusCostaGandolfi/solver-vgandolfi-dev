@@ -39,6 +39,7 @@ export interface UseOptimizerState {
   origin: OriginState;
   points: PointRow[];
   vehicles: VehicleRow[];
+  targetRoutes: string;
   webhookUrl: string;
   geoBusy: boolean;
   fileInputRef: React.RefObject<HTMLInputElement | null>;
@@ -48,6 +49,7 @@ export interface UseOptimizerState {
   setMatrixType: (type: MatrixType) => void;
   setOrigin: React.Dispatch<React.SetStateAction<OriginState>>;
   setWebhookUrl: (url: string) => void;
+  setTargetRoutes: (v: string) => void;
 
   addPoint: (data?: Partial<PointRow>) => void;
   updatePoint: (id: string, patch: Partial<PointRow>) => void;
@@ -81,6 +83,7 @@ export function useOptimizerState({
   const [origin, setOrigin] = useState<OriginState>(DEFAULT_ORIGIN);
   const [points, setPoints] = useState<PointRow[]>(DEFAULT_POINTS);
   const [vehicles, setVehicles] = useState<VehicleRow[]>(DEFAULT_VEHICLES);
+  const [targetRoutes, setTargetRoutes] = useState("");
   const [webhookUrl, setWebhookUrl] = useState("");
   const [geoBusy, setGeoBusy] = useState(false);
   /** Modo adicionar no mapa: quando ligado, um clique no mapa insere um ponto. */
@@ -255,6 +258,7 @@ export function useOptimizerState({
     origin,
     points,
     vehicles,
+    targetRoutes,
     webhookUrl,
     geoBusy,
     fileInputRef,
@@ -263,6 +267,7 @@ export function useOptimizerState({
     setMatrixType,
     setOrigin,
     setWebhookUrl,
+    setTargetRoutes,
     addPoint,
     updatePoint,
     removePoint,
