@@ -78,10 +78,6 @@ class VehicleType(BaseModel):
     max_volume_liters: Optional[float] = None
     max_weight_kg: Optional[float] = None
     max_deliveries: Optional[int] = None
-    max_distance_meters: Optional[float] = None
-    min_routes: int = 0
-    max_routes: Optional[int] = None
-    target_proportion: Optional[float] = None
     fixed_cost: float = 0.0
 
 
@@ -104,8 +100,7 @@ class VrpIn(BaseModel):
     clients: List[Client]
     vehicles: List[VehicleType]
     matrix_type: MatrixType = Field(default=MatrixType.EUCLIDIAN, alias="matrixType")
-    force_route_count: Optional[int] = None
-    max_route_distance: Optional[float] = None
+    target_routes: Optional[int] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(ZoneInfo("America/Sao_Paulo")))
 
 

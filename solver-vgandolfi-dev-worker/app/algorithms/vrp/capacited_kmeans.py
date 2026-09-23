@@ -9,6 +9,17 @@ from app.dtos import VehicleType
 
 logger = logging.getLogger(__name__)
 
+# Cost of opening one extra route when the vehicle has no explicit fixed cost.
+# Large enough to dominate distance, so the solver minimises the route count
+# when no `target_routes` is provided.
+ROUTE_COST = 500_000
+
+# Soft penalty per route of deviation from the VRP-level `target_routes`.
+TARGET_PENALTY = 1_000_000
+
+# Maximum number of candidate centroids each client is allowed to be assigned to.
+MAX_CENTROIDS_PER_POINT = 10
+
 
 class CapacitedKMeans:
     """Assign clients to routes (clusters) respecting capacity constraints using MILP.
@@ -24,7 +35,7 @@ class CapacitedKMeans:
         distances: np.ndarray,
         n_routes: int,
         vehicles: List[VehicleType],
-        force_route_count: Optional[int],
+        target_routes: Optional[int],
         points_weights: np.ndarray,
         route_offset: int = 0,
     ) -> None:
@@ -34,8 +45,11 @@ class CapacitedKMeans:
         self.distances = distances
         self.n_routes = n_routes
         self.vehicles = vehicles
-        self.force_route_count = force_route_count
+        self.target_routes = target_routes
         self.route_offset = route_offset
+        # Number of centroids available for each client to be assigned to.
+        number_of_centroides = len(self.distances[0]) if len(self.distances) else 0
+        self.max_center_for_point = int(min(MAX_CENTROIDS_PER_POINT, number_of_centroides))
         self.route_points: List[int] = []
         self.route_volumes: List[float] = []
         self.route_weights: List[float] = []
@@ -45,7 +59,7 @@ class CapacitedKMeans:
         """Solve assignment. Returns 1 on success, 0 if infeasible."""
         number_of_points = len(self.distances)
         number_of_centroides = len(self.distances[0])
-        max_center_for_point = int(np.ceil(len(self.points) * 0.4))
+        max_center_for_point = self.max_center_for_point
 
         solver = pywraplp.Solver.CreateSolver("SCIP")
         if not solver:
@@ -70,26 +84,12 @@ class CapacitedKMeans:
             y_total[j] = sum(y[j, v_idx] for v_idx in range(len(self.vehicles)))
             solver.Add(y_total[j] <= 1)
 
-        # Vehicle type usage limits
-        for v_idx, v in enumerate(self.vehicles):
-            if v.max_routes is not None:
-                solver.Add(
-                    sum(y[j, v_idx] for j in range(number_of_centroides)) <= v.max_routes
-                )
-            if v.min_routes > 0:
-                solver.Add(
-                    sum(y[j, v_idx] for j in range(number_of_centroides)) >= v.min_routes
-                )
-
-        # Total route count constraints
-        if self.force_route_count is not None:
-            solver.Add(sum(y_total[j] for j in range(number_of_centroides)) == self.force_route_count)
-        else:
-            solver.Add(sum(y_total[j] for j in range(number_of_centroides)) <= self.n_routes)
-            if self.route_offset > 0:
-                solver.Add(
-                    sum(y_total[j] for j in range(number_of_centroides)) >= self.route_offset
-                )
+        # Total route count constraints (upper bound only; the exact count is
+        # steered by the objective, optionally with a soft `target_routes`).
+        total_routes = sum(y_total[j] for j in range(number_of_centroides))
+        solver.Add(total_routes <= self.n_routes)
+        if self.route_offset > 0:
+            solver.Add(total_routes >= self.route_offset)
 
         # Objective: minimize distance + fixed vehicle costs
         objective_terms = []
@@ -99,8 +99,15 @@ class CapacitedKMeans:
 
         for j in range(number_of_centroides):
             for v_idx, v in enumerate(self.vehicles):
-                cost = v.fixed_cost if v.fixed_cost > 0 else 1000
+                cost = v.fixed_cost if v.fixed_cost > 0 else ROUTE_COST
                 objective_terms.append(cost * y[j, v_idx])
+
+        # Soft target: penalise the absolute deviation from `target_routes`.
+        if self.target_routes is not None:
+            dev_pos = solver.NumVar(0, solver.infinity(), "dev_pos")
+            dev_neg = solver.NumVar(0, solver.infinity(), "dev_neg")
+            solver.Add(total_routes - self.target_routes == dev_pos - dev_neg)
+            objective_terms.append(TARGET_PENALTY * (dev_pos + dev_neg))
 
         # Constraints: each client assigned to exactly one centroid
         for i in range(number_of_points):
@@ -113,11 +120,17 @@ class CapacitedKMeans:
                         solver.Add(x[i, j] == 0)
             solver.Add(sum(x[i, j] for j in range(number_of_centroides)) == 1)
 
+        # Big-M for vehicles without an explicit limit: a single route can never
+        # carry more than the total demand, so this is equivalent to "unlimited"
+        # while keeping every coefficient finite (SCIP rejects infinity).
+        total_volume = float(np.sum(self.points_volumes))
+        total_weight = float(np.sum(self.points_weights))
+
         # Capacity constraints per centroid
         for j in range(number_of_centroides):
             # Volume capacity
             vol_cap = solver.Sum(
-                (v.max_volume_liters if v.max_volume_liters is not None else solver.Infinity())
+                (v.max_volume_liters if v.max_volume_liters is not None else total_volume)
                 * y[j, v_idx]
                 for v_idx, v in enumerate(self.vehicles)
             )
@@ -128,7 +141,7 @@ class CapacitedKMeans:
 
             # Weight capacity
             wgt_cap = solver.Sum(
-                (v.max_weight_kg if v.max_weight_kg is not None else solver.Infinity())
+                (v.max_weight_kg if v.max_weight_kg is not None else total_weight)
                 * y[j, v_idx]
                 for v_idx, v in enumerate(self.vehicles)
             )

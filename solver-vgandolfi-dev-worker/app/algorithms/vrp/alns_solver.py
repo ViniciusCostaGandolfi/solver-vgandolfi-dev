@@ -12,6 +12,13 @@ from app.services.osrm_service import osrm_service
 
 logger = logging.getLogger(__name__)
 
+# Cost of keeping one route active when the vehicle has no explicit fixed cost.
+# Large enough to dominate distance, so ALNS minimises the route count.
+ROUTE_COST = 500_000
+
+# Soft penalty per route of deviation from the VRP-level `target_routes`.
+TARGET_PENALTY = 1_000_000
+
 
 class ALNSRoute:
     """Lightweight route representation using client indices for fast ALNS iteration.
@@ -73,10 +80,6 @@ class ALNSRoute:
             return False
         if self.vehicle.max_weight_kg is not None and self.weight + client.weight_kg > self.vehicle.max_weight_kg:
             return False
-        if self.vehicle.max_distance_meters is not None and position is not None:
-            cost = self.get_insertion_cost(client_idx, position)
-            if self.distance + cost > self.vehicle.max_distance_meters:
-                return False
         return True
 
     def get_insertion_cost(self, client_idx: int, position: int) -> float:
@@ -93,11 +96,7 @@ class ALNSRoute:
         best_pos = -1
         for i in range(len(self.client_indices) + 1):
             cost = self.get_insertion_cost(client_idx, i)
-            within_distance = (
-                self.vehicle.max_distance_meters is None
-                or self.distance + cost <= self.vehicle.max_distance_meters
-            )
-            if within_distance and cost < best_cost:
+            if cost < best_cost:
                 best_cost = cost
                 best_pos = i
         return best_pos, best_cost
@@ -133,18 +132,12 @@ class ALNSState:
         )
         cost += len(self.unassigned) * 1_000_000
 
-        used_counts: Dict[str, int] = {}
-        for v in self.vrp_in.vehicles:
-            used_counts[str(v.id)] = 0
-        for r in self.routes:
-            if r.client_indices:
-                used_counts[str(r.vehicle.id)] += 1
-        for v in self.vrp_in.vehicles:
-            vid = str(v.id)
-            if v.max_routes is not None and used_counts[vid] > v.max_routes:
-                cost += (used_counts[vid] - v.max_routes) * 500_000
-            if v.min_routes > 0 and used_counts[vid] < v.min_routes:
-                cost += (v.min_routes - used_counts[vid]) * 500_000
+        active_routes = len([r for r in self.routes if r.client_indices])
+        # Cost of keeping each route active (minimise route count by default).
+        cost += ROUTE_COST * active_routes
+        # Soft target: penalise the absolute deviation from `target_routes`.
+        if self.vrp_in.target_routes is not None:
+            cost += abs(active_routes - self.vrp_in.target_routes) * TARGET_PENALTY
         return cost
 
     def update_cost(self) -> None:
@@ -347,8 +340,6 @@ class ALNSSolver:
                     (v.max_deliveries is None or len(route.client_indices) <= v.max_deliveries)
                     and (v.max_volume_liters is None or route.volume <= v.max_volume_liters)
                     and (v.max_weight_kg is None or route.weight <= v.max_weight_kg)
-                    and (v.max_distance_meters is None or route.distance <= v.max_distance_meters)
-                    and (v.max_routes is None or used_counts[str(v.id)] < v.max_routes)
                 )
                 if fits:
                     best_v = v
@@ -439,20 +430,9 @@ class ALNSSolver:
                     f"unassigned={len(self.best_state.unassigned)}"
                 )
 
-        # Check fleet validity
-        fleet_valid = True
-        used_counts: Dict[str, int] = {}
-        for v in self.vrp_in.vehicles:
-            used_counts[str(v.id)] = 0
-        for r in self.best_state.routes:
-            if r.client_indices:
-                used_counts[str(r.vehicle.id)] += 1
-        for v in self.vrp_in.vehicles:
-            vid = str(v.id)
-            if v.max_routes is not None and used_counts[vid] > v.max_routes:
-                fleet_valid = False
-            if v.min_routes > 0 and used_counts[vid] < v.min_routes:
-                fleet_valid = False
+        # The fleet is always expanded to fit the demand, so the only validity
+        # signal that matters is that every client was assigned.
+        fleet_valid = len(self.best_state.unassigned) == 0
 
         return self._map_to_dto(self.best_state), len(self.best_state.unassigned), fleet_valid
 

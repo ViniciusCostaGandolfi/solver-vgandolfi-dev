@@ -68,8 +68,7 @@ class LargeVehicleRoutineProblemn:
                     vehicles=self.vrp_in.vehicles,
                     clients=cluster_clients,
                     matrix_type=self.vrp_in.matrix_type,
-                    force_route_count=self.vrp_in.force_route_count,
-                    max_route_distance=self.vrp_in.max_route_distance,
+                    target_routes=self.vrp_in.target_routes,
                 )
                 sub_solver = VehicleRoutineProblemn(cluster_vrp, settings=self.settings)
                 cluster_routes = sub_solver.resolve(deadline=deadline)
