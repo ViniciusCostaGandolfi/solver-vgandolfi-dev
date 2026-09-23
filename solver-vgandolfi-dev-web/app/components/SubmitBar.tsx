@@ -29,6 +29,10 @@ export function SubmitBar({
   onWebhookChange,
   onOptimize,
 }: SubmitBarProps) {
+  const totalVehicles = vehicles.reduce((acc, v) => {
+    const qty = parseCoord(v.quantity);
+    return acc + (qty !== null && Number.isInteger(qty) && qty >= 1 ? qty : 1);
+  }, 0);
   return (
     <div className="card card-border mt-6 bg-base-200/50">
       <div className="card-body">
@@ -40,7 +44,7 @@ export function SubmitBar({
                 {MATRIX_LABEL[matrixType]} · {points.length}{" "}
                 {points.length === 1 ? "ponto" : "pontos"}
                 {problemType === "VRP" &&
-                  ` · ${vehicles.length} ${vehicles.length === 1 ? "veículo" : "veículos"}`}
+                  ` · ${totalVehicles} ${totalVehicles === 1 ? "veículo" : "veículos"}`}
                 {problemType !== "DISTANCE_MATRIX" &&
                   (isValidLatLng(parseCoord(origin.lat), parseCoord(origin.lng))
                     ? " · origem definida"

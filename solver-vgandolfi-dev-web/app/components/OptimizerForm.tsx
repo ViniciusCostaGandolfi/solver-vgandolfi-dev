@@ -276,7 +276,7 @@ function VehiclesEditor({
           {vehicles.map((v, i) => (
             <div
               key={v.id}
-              className="grid grid-cols-2 items-end gap-2 rounded-field border border-base-200 p-3 sm:grid-cols-[1.2fr,1fr,1fr,1fr,auto]"
+              className="grid grid-cols-2 items-end gap-2 rounded-field border border-base-200 p-3 sm:grid-cols-[1.2fr,1fr,1fr,1fr,0.5fr,auto]"
             >
               <label className="block">
                 <span className="mb-1 block text-xs font-medium text-base-content/60">
@@ -329,6 +329,20 @@ function VehiclesEditor({
                   value={v.maxVolumeLiters ?? "0"}
                   onChange={(e) =>
                     onUpdateVehicle(v.id, { maxVolumeLiters: e.target.value })
+                  }
+                />
+              </label>
+              <label className="block">
+                <span className="mb-1 block text-xs font-medium text-base-content/60">
+                  Qtd.
+                </span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  className="input  input-sm w-full font-mono"
+                  value={v.quantity}
+                  onChange={(e) =>
+                    onUpdateVehicle(v.id, { quantity: e.target.value })
                   }
                 />
               </label>

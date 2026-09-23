@@ -169,8 +169,8 @@ const VRP_BODY = `{
       { "id": "c2", "name": "Cliente 2", "location": { "lat": -23.5874, "lng": -46.6576 }, "volumeLiters": 25, "weightKg": 340 }
     ],
     "vehicles": [
-      { "name": "Van", "maxDeliveries": 10, "maxWeightKg": 1000, "maxVolumeLiters": 200 },
-      { "name": "Carro", "maxDeliveries": 5, "maxWeightKg": 400, "maxVolumeLiters": 80 }
+      { "name": "Van", "quantity": 2, "maxDeliveries": 10, "maxWeightKg": 1000, "maxVolumeLiters": 200 },
+      { "name": "Carro", "quantity": 1, "maxDeliveries": 5, "maxWeightKg": 400, "maxVolumeLiters": 80 }
     ],
     "targetRoutes": 3
   }
@@ -188,8 +188,8 @@ const VRP_CURL = `curl -X POST http://localhost:8080/api/v1/jobs/vrp \\
         { "id": "c2", "name": "Cliente 2", "location": { "lat": -23.5874, "lng": -46.6576 }, "volumeLiters": 25, "weightKg": 340 }
       ],
       "vehicles": [
-        { "name": "Van", "maxDeliveries": 10, "maxWeightKg": 1000, "maxVolumeLiters": 200 },
-        { "name": "Carro", "maxDeliveries": 5, "maxWeightKg": 400, "maxVolumeLiters": 80 }
+        { "name": "Van", "quantity": 2, "maxDeliveries": 10, "maxWeightKg": 1000, "maxVolumeLiters": 200 },
+        { "name": "Carro", "quantity": 1, "maxDeliveries": 5, "maxWeightKg": 400, "maxVolumeLiters": 80 }
       ],
       "targetRoutes": null
     }
@@ -279,7 +279,7 @@ const VRP_FIELDS: ApiField[] = [
   { name: "input.matrixType", desc: '"EUCLIDIAN" (linha reta) ou "STREET" (OSRM).', required: true },
   { name: "input.origin", desc: "{ lat, lng } do depósito (saída das rotas).", required: true },
   { name: "input.clients[]", desc: "Clientes: id, name, location { lat, lng }, volumeLiters (L) e weightKg (kg). Mínimo 1.", required: true },
-  { name: "input.vehicles[]", desc: "Veículos: name, maxDeliveries, maxWeightKg e maxVolumeLiters. Mínimo 1.", required: true },
+  { name: "input.vehicles[]", desc: "Veículos: name, quantity (quantidade de unidades do tipo), maxDeliveries, maxWeightKg e maxVolumeLiters. Mínimo 1.", required: true },
   { name: "input.targetRoutes", desc: "Número de rotas alvo (opcional). Se ausente, o solver minimiza o número de rotas; se informado, o desvio em relação ao alvo é penalizado na função objetivo. Mínimo 1.", required: false },
 ];
 

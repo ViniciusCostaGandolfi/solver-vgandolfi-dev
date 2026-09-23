@@ -58,6 +58,7 @@ export interface PointRow {
 export interface VehicleRow {
   id: string;
   name: string;
+  quantity: string;
   maxDeliveries: string;
   maxWeightKg: string;
   maxVolumeLiters?: string;

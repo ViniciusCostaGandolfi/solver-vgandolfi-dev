@@ -93,12 +93,17 @@ export function buildVrpInput(
       volumeLiters: parseCoord(c.volumeLiters ?? "0") ?? 0,
       weightKg: parseCoord(c.weightKg ?? "0") ?? 0,
     })),
-    vehicles: vehicles.map((v) => ({
-      name: v.name,
-      maxDeliveries: parseCoord(v.maxDeliveries) ?? 0,
-      maxWeightKg: parseCoord(v.maxWeightKg) ?? 0,
-      maxVolumeLiters: parseCoord(v.maxVolumeLiters ?? "0") ?? 0,
-    })),
+    vehicles: vehicles.flatMap((v) => {
+      const qty = parseCoord(v.quantity);
+      const copies =
+        qty !== null && Number.isInteger(qty) && qty >= 1 ? qty : 1;
+      return Array.from({ length: copies }, () => ({
+        name: v.name,
+        maxDeliveries: parseCoord(v.maxDeliveries) ?? 0,
+        maxWeightKg: parseCoord(v.maxWeightKg) ?? 0,
+        maxVolumeLiters: parseCoord(v.maxVolumeLiters ?? "0") ?? 0,
+      }));
+    }),
   };
 }
 
@@ -180,6 +185,13 @@ export function validateProblem(
     }
     for (const v of vehicles) {
       if (!v.name.trim()) return "Dê um nome para todos os veículos.";
+
+      if (v.quantity.trim()) {
+        const qty = parseCoord(v.quantity);
+        if (qty === null || !Number.isInteger(qty) || qty < 1) {
+          return `O veículo "${v.name || "sem nome"}" precisa de uma quantidade inteira maior que zero.`;
+        }
+      }
 
       const maxDeliveries = parseCoord(v.maxDeliveries);
       if (maxDeliveries === null || maxDeliveries <= 0) {

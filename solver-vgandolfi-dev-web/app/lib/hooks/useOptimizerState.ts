@@ -14,11 +14,28 @@ const DEFAULT_POINTS: PointRow[] = [
   { id: "p1", name: "Av. Paulista, 1578", lat: "-23.5614", lng: "-46.6559", volumeLiters: "10", weightKg: "120" },
   { id: "p2", name: "Mercado Municipal", lat: "-23.5415", lng: "-46.6293", volumeLiters: "25", weightKg: "340" },
   { id: "p3", name: "Parque Ibirapuera", lat: "-23.5874", lng: "-46.6576", volumeLiters: "5", weightKg: "40" },
+  { id: "p4", name: "Shopping Eldorado", lat: "-23.5893", lng: "-46.6830", volumeLiters: "15", weightKg: "200" },
+  { id: "p5", name: "Estádio do Morumbi", lat: "-23.5999", lng: "-46.7203", volumeLiters: "8", weightKg: "95" },
+  { id: "p6", name: "Universidade de São Paulo", lat: "-23.5614", lng: "-46.7307", volumeLiters: "20", weightKg: "260" },
+  { id: "p7", name: "Shopping Vila Olímpia", lat: "-23.5944", lng: "-46.6857", volumeLiters: "30", weightKg: "410" },
+  { id: "p8", name: "Parque do Povo", lat: "-23.5970", lng: "-46.6903", volumeLiters: "6", weightKg: "60" },
+  { id: "p9", name: "Shopping Eldorado II", lat: "-23.5901", lng: "-46.6846", volumeLiters: "12", weightKg: "150" },
+  { id: "p10", name: "Aeroporto de Congonhas", lat: "-23.6263", lng: "-46.6564", volumeLiters: "22", weightKg: "300" },
+  { id: "p11", name: "Shopping Center Norte", lat: "-23.5101", lng: "-46.6209", volumeLiters: "35", weightKg: "480" },
+  { id: "p12", name: "Estação da Luz", lat: "-23.5344", lng: "-46.6351", volumeLiters: "4", weightKg: "30" },
+  { id: "p13", name: "Parque Trianon", lat: "-23.5682", lng: "-46.6520", volumeLiters: "7", weightKg: "75" },
+  { id: "p14", name: "Museu do Ipiranga", lat: "-23.5852", lng: "-46.6093", volumeLiters: "18", weightKg: "230" },
+  { id: "p15", name: "Shopping Aricanduva", lat: "-23.5752", lng: "-46.5515", volumeLiters: "40", weightKg: "520" },
+  { id: "p16", name: "Parque Anhanguera", lat: "-23.4722", lng: "-46.7561", volumeLiters: "9", weightKg: "110" },
+  { id: "p17", name: "Estádio do Pacaembu", lat: "-23.5485", lng: "-46.6661", volumeLiters: "11", weightKg: "140" },
+  { id: "p18", name: "Parque Villa-Lobos", lat: "-23.5544", lng: "-46.7316", volumeLiters: "16", weightKg: "210" },
+  { id: "p19", name: "Shopping Morumbi Town", lat: "-23.6098", lng: "-46.6950", volumeLiters: "28", weightKg: "380" },
+  { id: "p20", name: "Autódromo de Interlagos", lat: "-23.7026", lng: "-46.6999", volumeLiters: "13", weightKg: "170" },
 ];
 
 const DEFAULT_VEHICLES: VehicleRow[] = [
-  { id: "v1", name: "Van", maxDeliveries: "10", maxWeightKg: "1000", maxVolumeLiters: "200" },
-  { id: "v2", name: "Carro", maxDeliveries: "5", maxWeightKg: "400", maxVolumeLiters: "80" },
+  { id: "v1", name: "Van", quantity: "1", maxDeliveries: "10", maxWeightKg: "1000", maxVolumeLiters: "200" },
+  { id: "v2", name: "Carro", quantity: "1", maxDeliveries: "5", maxWeightKg: "400", maxVolumeLiters: "80" },
 ];
 
 const DEFAULT_ORIGIN: OriginState = {
@@ -121,6 +138,7 @@ export function useOptimizerState({
       {
         id: uid(),
         name: `Veículo ${prev.length + 1}`,
+        quantity: "1",
         maxDeliveries: "10",
         maxWeightKg: "1000",
         maxVolumeLiters: "100",
