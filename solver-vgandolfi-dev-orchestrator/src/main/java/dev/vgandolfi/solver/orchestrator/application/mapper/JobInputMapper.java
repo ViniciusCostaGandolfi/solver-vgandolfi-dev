@@ -48,6 +48,7 @@ public class JobInputMapper {
         payload.put("clients", input.clients().stream().map(this::toClient).toList());
         payload.put("vehicles", input.vehicles().stream().map(this::toVehicle).toList());
         payload.put("matrix_type", input.matrixType().name());
+        payload.put("target_routes", input.targetRoutes());
         return serialize(payload);
     }
 
@@ -87,8 +88,6 @@ public class JobInputMapper {
         map.put("max_volume_liters", vehicle.maxVolumeLiters());
         map.put("max_weight_kg", vehicle.maxWeightKg());
         map.put("max_deliveries", vehicle.maxDeliveries());
-        map.put("min_routes", 0);
-        map.put("fixed_cost", 0.0);
         return map;
     }
 

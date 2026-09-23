@@ -71,11 +71,13 @@ class JobInputMapperTest {
                         new VrpClientInput("c1", "Cliente 1", new CoordinateInput(-23.55, -46.65), 10.5, 2.0),
                         new VrpClientInput("c2", null, new CoordinateInput(-23.6, -46.7), null, null)),
                 List.of(new VrpVehicleInput("Van 1", 5, 100.0, 200.0)),
-                MatrixType.EUCLIDIAN);
+                MatrixType.EUCLIDIAN,
+                3);
 
         JsonNode root = parse(mapper.toVrpInputJson(input));
 
         assertThat(root.get("matrix_type").asText()).isEqualTo("EUCLIDIAN");
+        assertThat(root.get("target_routes").asInt()).isEqualTo(3);
 
         JsonNode origin = root.get("origin");
         assertThat(origin.get("customer_name").asText()).isEmpty();
@@ -113,8 +115,8 @@ class JobInputMapperTest {
         assertThat(v1.get("max_volume_liters").asDouble()).isEqualTo(200.0);
         assertThat(v1.get("max_weight_kg").asDouble()).isEqualTo(100.0);
         assertThat(v1.get("max_deliveries").asInt()).isEqualTo(5);
-        assertThat(v1.get("min_routes").asInt()).isZero();
-        assertThat(v1.get("fixed_cost").asDouble()).isZero();
+        assertThat(v1.has("min_routes")).isFalse();
+        assertThat(v1.has("fixed_cost")).isFalse();
 
         // Cada id gerado deve ser único (clients e vehicles).
         assertThat(c1.get("id").asText()).isNotEqualTo(c2.get("id").asText());
@@ -128,7 +130,8 @@ class JobInputMapperTest {
                 new CoordinateInput(0, 0),
                 List.of(new VrpClientInput(null, "Sem id", new CoordinateInput(1, 1), null, null)),
                 List.of(new VrpVehicleInput("Van", null, null, null)),
-                MatrixType.EUCLIDIAN);
+                MatrixType.EUCLIDIAN,
+                null);
 
         JsonNode root = parse(mapper.toVrpInputJson(input));
 
@@ -149,7 +152,8 @@ class JobInputMapperTest {
                         new VrpClientInput("c2", "Cliente 2", new CoordinateInput(2, 2), 5.0, 1.0),
                         new VrpClientInput("cliente-x", "Cliente 3", new CoordinateInput(3, 3), 5.0, 1.0)),
                 List.of(new VrpVehicleInput("Van 1", null, null, null)),
-                MatrixType.EUCLIDIAN);
+                MatrixType.EUCLIDIAN,
+                null);
 
         JsonNode root = parse(mapper.toVrpInputJson(input));
 
