@@ -5,7 +5,6 @@ import { IconHome, IconInfo, IconPlus } from "./icons";
 interface MapPanelProps {
   points: MapPoint[];
   routes: MapRoute[];
-  dark: boolean;
   problemType: "TSP" | "VRP" | "DISTANCE_MATRIX";
   onPointDrag: (id: string, lat: number, lng: number) => void;
   onMapClick: (lat: number, lng: number) => void;
@@ -18,7 +17,6 @@ interface MapPanelProps {
 export function MapPanel({
   points,
   routes,
-  dark,
   problemType,
   onPointDrag,
   onMapClick,
@@ -60,7 +58,6 @@ export function MapPanel({
         <MapCanvas
           points={points}
           routes={routes}
-          dark={dark}
           onPointChange={onPointDrag}
           onMapClick={addPointMode ? onMapClick : undefined}
           minHeight={440}

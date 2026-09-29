@@ -24,7 +24,6 @@ export interface MapRoute {
 interface MapCanvasProps {
   points: MapPoint[];
   routes?: MapRoute[];
-  dark?: boolean;
   onPointChange?: (id: string, lat: number, lng: number) => void;
   onMapClick?: (lat: number, lng: number) => void;
   className?: string;
@@ -67,7 +66,6 @@ const ORIGIN_ICON_HTML = `
 export function MapCanvas({
   points,
   routes,
-  dark = false,
   onPointChange,
   onMapClick,
   className = "",
@@ -148,16 +146,17 @@ export function MapCanvas({
     if (!L || !map) return;
 
     tileLayerRef.current?.remove();
-const url = dark
-      ? "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-      : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
-    tileLayerRef.current = L.tileLayer(url, {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: "abcd",
-      maxZoom: 19,
-    }).addTo(map);
-  }, [dark, ready]);
+    // Tiles raster do OpenStreetMap: gratuitos e sem API key.
+    // (Os basemaps da CARTO passaram a exigir chave até para tiles raster.)
+    tileLayerRef.current = L.tileLayer(
+      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+      },
+    ).addTo(map);
+  }, [ready]);
 
   /* Mantém o mapa com o tamanho correto quando o container muda de tamanho
      (layout responsivo, card sticky, etc.). Sem `invalidateSize`, o Leaflet

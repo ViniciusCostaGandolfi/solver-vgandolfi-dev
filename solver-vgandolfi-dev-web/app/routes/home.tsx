@@ -99,7 +99,6 @@ export default function Home() {
             <MapPanel
               points={optimizer.mapPoints}
               routes={routing.mapRoutes}
-              dark={theme === "dark"}
               problemType={optimizer.problemType}
               onPointDrag={optimizer.handlePointDrag}
               onMapClick={optimizer.handleMapClick}
